@@ -1,13 +1,17 @@
 import "./style.css";
-import L from "leaflet";
 import createMap from "./utils/leaflet";
 import { markerData, geoJSONLayer } from "./utils/data";
 
 let map = new createMap();
 map.addBoundaries(geoJSONLayer);
 map.addMarkers(markerData);
-map.clearMap();
-map.addCustomControls();
+// map.clearMap();
+
+function clearMapBtn() {
+  map.clearMap();
+}
+
+document.getElementById("clear-map").addEventListener("click", clearMapBtn);
 
 function filterMap() {
   clearMap();
@@ -53,6 +57,3 @@ function filterMarker() {
 function toggleGeoman() {
   map.pm.toggleControls();
 }
-//===========================================================================================
-
-// add custom control to map

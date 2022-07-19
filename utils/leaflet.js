@@ -70,28 +70,6 @@ class createMap {
     });
   }
 
-  addCustomControls() {
-    L.Control.CustomControl = L.Control.extend({
-      options: {
-        position: "topright",
-      },
-      onAdd: function (map) {
-        var container = L.DomUtil.create("div", "leaflet-bar clear-map");
-        container.innerHTML = `
-          <button class="bg-white" onclick="loadData()">Load Data</button>
-          <button class="bg-white" id="clear-map">Clear Map</button>
-          <button class="bg-white" onclick="filterMap()">Filter Block</button>
-          <button class="bg-white" onclick="filterMarker()">Filter Marker</button>
-          <button class="bg-white" onclick="toggleGeoman()">Toggle Controls</button>`;
-        return container;
-      },
-    });
-    L.control.CustomControl = function (options) {
-      return new L.Control.CustomControl(options);
-    };
-    L.control.CustomControl().addTo(this.map);
-  }
-
   toggleControls() {
     this.map.pm.toggleControls();
   }
@@ -130,6 +108,16 @@ class createMap {
     // add markers
     this.markers.map((marker) => {
       marker.addTo(this.map);
+    });
+  }
+
+  filterMap(boundary, markers, area) {
+    this.clearMap();
+    // filter data to add to map - polygon
+    this.boundaries = L.geoJSON(boundary, {
+      filter: function (feature, layer) {
+        return feature.properties.block === area;
+      },
     });
   }
 }
