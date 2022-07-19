@@ -37,8 +37,10 @@ class createMap {
     this.setLoad = false;
     this.markers = [];
     this.boundaries = [];
-    this.map = L.map("map");
-    this.map.setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
+    this.map = L.map("map", { attributionControl: false }).setView(
+      DEFAULT_LOCATION,
+      DEFAULT_ZOOM
+    );
     CartoDB_DarkMatter.addTo(this.map);
     this.addControls();
     this.toggleControls();
@@ -54,6 +56,8 @@ class createMap {
         JSON.stringify(geoJSONLayer)
       );
     });
+
+    L.control.scale({ imperial: false }).addTo(this.map);
   }
 
   addControls() {
@@ -75,11 +79,9 @@ class createMap {
   }
 
   addBoundaries(geoJSON) {
-    if (!this.setLoad) {
-      this.boundaries = L.geoJSON(geoJSON).addTo(this.map);
-      this.changeView(this.boundaries.getBounds());
-      this.setLoad = true;
-    }
+    this.boundaries = L.geoJSON(geoJSON).addTo(this.map);
+    this.changeView(this.boundaries.getBounds());
+    this.setLoad = true;
   }
 
   changeView(bounds) {
@@ -111,14 +113,10 @@ class createMap {
     });
   }
 
-  filterMap(boundary, markers, area) {
+  applyFilter(boundary, markers) {
     this.clearMap();
-    // filter data to add to map - polygon
-    this.boundaries = L.geoJSON(boundary, {
-      filter: function (feature, layer) {
-        return feature.properties.block === area;
-      },
-    });
+    this.addMarkers(markers);
+    this.addBoundaries(boundary);
   }
 }
 

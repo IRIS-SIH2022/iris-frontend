@@ -143,3 +143,11 @@ export const geoJSONLayer = [
     },
   },
 ];
+
+export const mapFilter = geoJSONLayer.filter((item) => {
+  return item.properties.block === "Block 1";
+});
+
+export const markerFilter = markerData.filter((item) => {
+  return item.crime === "Assault";
+});
