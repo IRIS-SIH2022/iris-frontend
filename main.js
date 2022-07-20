@@ -10,27 +10,37 @@ import {
 
 let map = new createMap();
 
-function clearMapBtn() {
-  map.clearMap();
-}
+// render blocks from geoJSONLayer
+const blocks = geoJSONLayer
+  .map((item) => {
+    const opt = document.createElement("option");
+    opt.value = item.properties.block;
+    opt.innerText = item.properties.block;
+    return opt;
+  })
+  .sort();
 
-function filterMapBtn() {
-  map.applyFilter(mapFilter, markerFilter);
-}
+blocks.forEach((item) => {
+  document.getElementById("block").appendChild(item);
+});
 
-function filterMarkerBtn() {
-  map.applyFilter(geoJSONLayer, markerFilter);
-}
+document.getElementById("filter-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const formProps = Object.fromEntries(formData);
+  const { cctns, block, crime, act } = formProps;
+  console.log(formProps);
 
-function loadDataBtn() {
-  map.applyFilter(geoJSONLayer, markerData);
-}
+  // make request to backend
+  // get geoJSON of markers and boundaries
+  // apply filter to map
 
-document
-  .getElementById("filter-marker")
-  .addEventListener("click", filterMapBtn);
-document
-  .getElementById("filter-map")
-  .addEventListener("click", filterMarkerBtn);
-document.getElementById("clear-map").addEventListener("click", clearMapBtn);
-document.getElementById("load-data").addEventListener("click", loadDataBtn);
+  // temp code to check functionality
+  if (cctns === "" && block === "all" && crime === "all") {
+    map.applyFilter(geoJSONLayer, markerData);
+  } else if (cctns === "" && block === "all" && crime !== "all") {
+    map.applyFilter(geoJSONLayer, markerFilter);
+  } else if (cctns === "" && block !== "all" && crime === "all") {
+    map.applyFilter(mapFilter, markerFilter);
+  }
+});

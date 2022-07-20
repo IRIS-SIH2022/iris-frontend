@@ -101,7 +101,7 @@ export const geoJSONLayer = [
       id: "3",
       state: "Delhi",
       distict: "CP",
-      block: "Block 3",
+      block: "Block 4",
     },
     geometry: {
       type: "Polygon",
@@ -124,7 +124,7 @@ export const geoJSONLayer = [
       id: "4",
       state: "Uttar Pradesh",
       distict: "Dadri",
-      block: "Block 4",
+      block: "Block 3",
     },
     geometry: {
       type: "Polygon",
