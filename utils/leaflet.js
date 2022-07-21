@@ -105,10 +105,10 @@ class createMap {
     this.layerControl = L.control.layers(baseMaps).addTo(this.map);
 
     // add marker layer
-    this.markerLayer = L.layerGroup().addTo(this.map);
+    this.markerLayer = L.featureGroup().addTo(this.map);
     this.layerControl.addOverlay(this.markerLayer, "Markers");
     // add boundaries layer
-    this.boundariesLayer = L.layerGroup().addTo(this.map);
+    this.boundariesLayer = L.featureGroup().addTo(this.map);
     this.layerControl.addOverlay(this.boundariesLayer, "Boundaries");
     // add heatmap layer
     this.heatMapLayer = L.heatLayer(this.heatmapData, { radius: 20 });
@@ -195,6 +195,7 @@ class createMap {
     this.clearMap();
 
     if (boundary.length > 0) this.boundaries = L.geoJSON(boundary);
+    else return;
 
     if (markers.length > 0)
       this.markers = markers.map((marker) => {
@@ -221,7 +222,7 @@ class createMap {
     if (this.map.hasLayer(this.heatMapLayer)) this.addHeatmap();
     if (this.map.hasLayer(this.markerLayer)) this.addMarkers();
     if (this.map.hasLayer(this.boundariesLayer)) this.addBoundaries();
-    // this.changeView(this.boundaries.getBounds());
+    this.changeView(this.boundaries.getBounds());
   }
 }
 
