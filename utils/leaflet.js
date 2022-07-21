@@ -2,7 +2,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
-
+import "https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
 
@@ -81,6 +81,21 @@ class createMap {
         JSON.stringify(geoJSONLayer)
       );
     });
+    var heat = L.heatLayer([
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [22.629799, 80.212343, 10000000], // lat, lng, intensity
+      [23.629799, 80.212343, 0.5],
+      
+    ], {radius: 25}).addTo(this.map);
 
     L.control.scale({ imperial: false }).addTo(this.map);
   }

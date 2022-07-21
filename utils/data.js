@@ -151,3 +151,30 @@ export const mapFilter = geoJSONLayer.filter((item) => {
 export const markerFilter = markerData.filter((item) => {
   return item.crime === "Assault";
 });
+
+export const crimeJSON = {
+  "Murder": {
+    "color": "#c30b82",
+    "intensity": 7
+  },
+  "Assault": {
+    "color": "#74D173",
+    "intensity": 4
+  },
+  "Theft": {
+    "color": "#00b5b9",
+    "intensity": 3
+  },
+  "Burglary": {
+    "color": "#f5df62",
+    "intensity": 3
+  },
+  "Drugs": {
+    "color": "#eb7953",
+    "intensity": 8
+  },
+  "Other": {
+    "color": "#a393d1",
+    "intensity": 5
+  }
+}
