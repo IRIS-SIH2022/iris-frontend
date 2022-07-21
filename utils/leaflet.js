@@ -1,12 +1,18 @@
-import L from "leaflet";
+import L, { latLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "leaflet.heat";
 import { crimeJSON, heatmapData, markerData } from "./data";
+
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
-
+const BOUNDS = new L.latLngBounds(
+  // new L.latLng(23.63936, 68.14712),
+  // new L.latLng(28.20453, 97.34466)
+  new L.latLng(37.148033, 74.577971),
+  new L.latLng(8.086831, 77.513296)
+);
 // dark map
 const CartoDB_DarkMatter = L.tileLayer(
   "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
@@ -38,8 +44,8 @@ const CartoDB_Positron = L.tileLayer(
 );
 
 const baseMaps = {
-  "Light Map": CartoDB_Positron,
   "Dark Map": CartoDB_DarkMatter,
+  "Light Map": CartoDB_Positron,
   "Detailed Map": CartoDB_Voyager,
 };
 
@@ -99,6 +105,8 @@ class createMap {
       attributionControl: false,
       layers: [CartoDB_DarkMatter],
       preferCanvas: true,
+      minZoom: 5,
+      maxBounds: BOUNDS,
     }).setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
     this.addControls();
     this.toggleControls();
@@ -193,7 +201,10 @@ class createMap {
     this.clearMap();
 
     if (boundary.length > 0) this.boundaries = L.geoJSON(boundary);
-    else return;
+    else {
+      this.changeView(BOUNDS);
+      return;
+    }
 
     if (markers.length > 0)
       this.markers = markers.map((marker) => {
