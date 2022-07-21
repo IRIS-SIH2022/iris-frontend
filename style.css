@@ -17,3 +17,34 @@
   background: #626060;
   color: #5e2323;
 }
+.ring1{
+  border-radius: 50%;
+	  height: 16px;
+	  width: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)  
+}
+.ring2{
+  border-radius: 50%;
+	  height: 22px;
+	  width: 22px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}
+
+.ring3{
+  border-radius: 50%;
+	  height: 28px;
+	  width: 28px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}

@@ -16,14 +16,39 @@ const CartoDB_DarkMatter = L.tileLayer(
   }
 );
 
-const createCustomMarker = (lat, lng, crime, time) => {
-  const crimeColors = { Murder: "#c30b82", Assault: "#74D173" };
-  const icon = L.divIcon({
+const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
+  const crimeColors = { Murder: "#c30b82", Assault: "#74D173", Theft: "#00b5b9", Burglary: "#f5df62", Drugs: "#eb7953", Other: "#a393d1" };
+
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors[crime]
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors[crime]};"></div>`
+
+  let icon = L.divIcon({
     className: "custom-div-icon",
-    html: `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
-      crimeColors[crime]
-    };box-shadow: 0px 0px 3px 2px ${crimeColors[crime]};"></div>`,
+    html: HTMLdata,
   });
+
+  //rings around latest crimes
+  if (hoursDifference <= 24) {
+    HTMLdata = 
+    `<div class='ring3' style="border: 1px solid ${crimeColors[crime]};">
+      <div class='ring2' style="border: 1px solid ${crimeColors[crime]};">
+        <div class='ring1' style="border: 1px solid ${crimeColors[crime]};">
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors[crime]
+            };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors[crime]};  position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%) ">
+          </div>
+        </div>
+      </div>
+    </div>`
+    icon = L.divIcon({
+      className: "custom-div-icon",
+      html: HTMLdata,
+    });
+  }
+
   const newMarker = L.marker([lat, lng], {
     icon,
     crime,
@@ -104,8 +129,20 @@ class createMap {
   }
 
   addMarkers(markerData) {
-    this.markers = markerData.map((marker) =>
-      createCustomMarker(marker.lat, marker.lng, marker.crime, marker.time)
+    this.markers = markerData.map((marker) => {
+      let difference = Date.now() - marker.time * 1000;
+      let hoursDifference = Math.floor(difference / 1000 / 60 / 60);
+      let crimeAge;
+      if (hoursDifference <= 1)
+        crimeAge = 3;
+      else if (hoursDifference <= 24)
+        crimeAge = 2;
+      else
+        crimeAge = 1;
+
+      console.log(crimeAge, hoursDifference)
+      return createCustomMarker(marker.lat, marker.lng, marker.crime, crimeAge, hoursDifference)
+    }
     );
     // add markers
     this.markers.map((marker) => {
