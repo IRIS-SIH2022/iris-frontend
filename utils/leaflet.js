@@ -128,7 +128,6 @@ class createMap {
 
     // listen overlay change event
     this.map.on("overlayadd", (e) => {
-      console.log(e.name);
       if (e.name === "Heatmap" && this.heatmapData.length > 0) {
         this.addHeatmap();
       }
@@ -161,14 +160,10 @@ class createMap {
   }
 
   addBoundaries() {
-    this.boundariesLayer.clearLayers();
-    console.log("boundaries", this.boundaries);
     this.boundariesLayer.addLayer(this.boundaries);
-    // this.changeView(this.boundaries.getBounds());
   }
 
   addMarkers() {
-    this.markerLayer.clearLayers();
     this.markers.map((marker) => {
       this.markerLayer.addLayer(marker);
     });
@@ -189,6 +184,9 @@ class createMap {
     this.boundaries = L.geoJSON();
     this.markers = [];
     this.heatmapData = [];
+    this.boundariesLayer.clearLayers();
+    this.markerLayer.clearLayers();
+    this.heatMapLayer.setLatLngs([]);
   }
 
   applyFilter(boundary, markers) {
