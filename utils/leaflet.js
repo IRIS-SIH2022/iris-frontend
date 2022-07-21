@@ -40,7 +40,7 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
   });
 
   //rings around latest crimes
-  if (hoursDifference <= 24) {
+  if (hoursDifference <= 44) {
     HTMLdata = `<div class='ring3' style="border: 1px solid ${
       crimeColors["color"]
     };">

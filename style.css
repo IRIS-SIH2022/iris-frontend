@@ -19,8 +19,8 @@
 }
 .ring1{
   border-radius: 50%;
-	  height: 16px;
-	  width: 16px;
+	  height: 12px;
+	  width: 12px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -29,8 +29,8 @@
 }
 .ring2{
   border-radius: 50%;
-	  height: 22px;
-	  width: 22px;
+	  height: 16px;
+	  width: 16px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -40,8 +40,8 @@
 
 .ring3{
   border-radius: 50%;
-	  height: 28px;
-	  width: 28px;
+	  height: 20px;
+	  width: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
