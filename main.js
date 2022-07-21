@@ -18,7 +18,7 @@ const blocks = geoJSONLayer
     opt.innerText = item.properties.block;
     return opt;
   })
-  .sort();
+  .sort((a, b) => a.value.localeCompare(b.value));
 
 blocks.forEach((item) => {
   document.getElementById("block").appendChild(item);
