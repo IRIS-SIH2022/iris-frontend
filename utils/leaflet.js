@@ -17,13 +17,30 @@ const CartoDB_DarkMatter = L.tileLayer(
   }
 );
 
-const heatmapLayer = L.heatLayer(heatmapData, { radius: 20 });
+var CartoDB_Voyager = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: "abcd",
+    maxZoom: 20,
+  }
+);
+
+const CartoDB_Positron = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: "abcd",
+    maxZoom: 20,
+  }
+);
 
 const baseMaps = {
-  "Normal map": CartoDB_DarkMatter,
-};
-const overlays = {
-  Heatmap: heatmapLayer,
+  "Light Map": CartoDB_Positron,
+  "Dark Map": CartoDB_DarkMatter,
+  "Detailed Map": CartoDB_Voyager,
 };
 
 const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
@@ -75,17 +92,27 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
 
 class createMap {
   constructor() {
-    this.setLoad = false;
     this.markers = [];
-    this.boundaries = [];
+    this.boundaries = L.geoJSON([]);
+    this.heatmapData = [];
     this.map = L.map("map", {
       attributionControl: false,
       layers: [CartoDB_DarkMatter],
+      preferCanvas: true,
     }).setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
-    CartoDB_DarkMatter.addTo(this.map);
     this.addControls();
     this.toggleControls();
-    let layerControl = L.control.layers(baseMaps, overlays).addTo(this.map);
+    this.layerControl = L.control.layers(baseMaps).addTo(this.map);
+
+    // add marker layer
+    this.markerLayer = L.layerGroup().addTo(this.map);
+    this.layerControl.addOverlay(this.markerLayer, "Markers");
+    // add boundaries layer
+    this.boundariesLayer = L.layerGroup().addTo(this.map);
+    this.layerControl.addOverlay(this.boundariesLayer, "Boundaries");
+    // add heatmap layer
+    this.heatMapLayer = L.heatLayer(this.heatmapData, { radius: 20 });
+    this.layerControl.addOverlay(this.heatMapLayer, "Heatmap");
 
     // get geoJSON of geoman
     this.map.on("pm:create", function (e) {
@@ -99,10 +126,19 @@ class createMap {
       );
     });
 
-    //to show heatmap
-    // let heat = L.heatLayer(heatmapData, {radius: 20}).addTo(this.map);
-
-    L.control.scale({ imperial: false }).addTo(this.map);
+    // listen overlay change event
+    this.map.on("overlayadd", (e) => {
+      console.log(e.name);
+      if (e.name === "Heatmap" && this.heatmapData.length > 0) {
+        this.addHeatmap();
+      }
+      if (e.name === "Markers" && this.markers.length > 0) {
+        this.addMarkers();
+      }
+      if (e.name === "Boundaries") {
+        this.addBoundaries();
+      }
+    });
   }
 
   addControls() {
@@ -117,16 +153,29 @@ class createMap {
       rotateMode: false,
       cutPolygon: false,
     });
+    L.control.scale({ imperial: false }).addTo(this.map);
   }
 
   toggleControls() {
     this.map.pm.toggleControls();
   }
 
-  addBoundaries(geoJSON) {
-    this.boundaries = L.geoJSON(geoJSON).addTo(this.map);
-    this.changeView(this.boundaries.getBounds());
-    this.setLoad = true;
+  addBoundaries() {
+    this.boundariesLayer.clearLayers();
+    console.log("boundaries", this.boundaries);
+    this.boundariesLayer.addLayer(this.boundaries);
+    // this.changeView(this.boundaries.getBounds());
+  }
+
+  addMarkers() {
+    this.markerLayer.clearLayers();
+    this.markers.map((marker) => {
+      this.markerLayer.addLayer(marker);
+    });
+  }
+
+  addHeatmap() {
+    this.heatMapLayer.setLatLngs(this.heatmapData);
   }
 
   changeView(bounds) {
@@ -137,45 +186,42 @@ class createMap {
   }
 
   clearMap() {
-    // clear markers
-    this.markers.map((marker) => {
-      marker.remove();
-    });
-    this.map.removeLayer(this.boundaries);
-    this.setLoad = false;
-
-    this.boundaries = [];
+    this.boundaries = L.geoJSON();
     this.markers = [];
-  }
-
-  addMarkers(markerData) {
-    this.markers = markerData.map((marker) => {
-      let difference = Date.now() - marker.time * 1000;
-      let hoursDifference = Math.floor(difference / 1000 / 60 / 60);
-      let crimeAge;
-      if (hoursDifference <= 1) crimeAge = 3;
-      else if (hoursDifference <= 24) crimeAge = 2;
-      else crimeAge = 1;
-
-      console.log(crimeAge, hoursDifference);
-      return createCustomMarker(
-        marker.lat,
-        marker.lng,
-        marker.crime,
-        crimeAge,
-        hoursDifference
-      );
-    });
-    // add markers
-    this.markers.map((marker) => {
-      marker.addTo(this.map);
-    });
+    this.heatmapData = [];
   }
 
   applyFilter(boundary, markers) {
     this.clearMap();
-    this.addMarkers(markers);
-    this.addBoundaries(boundary);
+
+    if (boundary.length > 0) this.boundaries = L.geoJSON(boundary);
+
+    if (markers.length > 0)
+      this.markers = markers.map((marker) => {
+        let difference = Date.now() - marker.time * 1000;
+        let hoursDifference = Math.floor(difference / 1000 / 60 / 60);
+        let crimeAge;
+        if (hoursDifference <= 1) crimeAge = 3;
+        else if (hoursDifference <= 24) crimeAge = 2;
+        else crimeAge = 1;
+
+        return createCustomMarker(
+          marker.lat,
+          marker.lng,
+          marker.crime,
+          crimeAge,
+          hoursDifference
+        );
+      });
+
+    // TODO - calculate heatmap data from markers or get it from the server
+    // also add necessary checks for empty arrays
+    this.heatmapData = heatmapData;
+
+    if (this.map.hasLayer(this.heatMapLayer)) this.addHeatmap();
+    if (this.map.hasLayer(this.markerLayer)) this.addMarkers();
+    if (this.map.hasLayer(this.boundariesLayer)) this.addBoundaries();
+    // this.changeView(this.boundaries.getBounds());
   }
 }
 

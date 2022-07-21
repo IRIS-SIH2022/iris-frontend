@@ -42,5 +42,7 @@ document.getElementById("filter-form").addEventListener("submit", (e) => {
     map.applyFilter(geoJSONLayer, markerFilter);
   } else if (cctns === "" && block !== "all" && crime === "all") {
     map.applyFilter(mapFilter, markerFilter);
+  } else if (cctns === "" && block !== "all" && crime !== "all") {
+    map.applyFilter([], []);
   }
 });
