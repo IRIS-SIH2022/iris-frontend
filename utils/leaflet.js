@@ -17,6 +17,15 @@ const CartoDB_DarkMatter = L.tileLayer(
   }
 );
 
+const heatmapLayer = L.heatLayer(heatmapData, {radius: 20});
+
+const baseMaps = {
+  "Normal map": CartoDB_DarkMatter
+};
+const overlays = {
+  "Heatmap": heatmapLayer
+};
+
 const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
   const crimeColors = crimeJSON[crime]
   let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
@@ -62,13 +71,14 @@ class createMap {
     this.setLoad = false;
     this.markers = [];
     this.boundaries = [];
-    this.map = L.map("map", { attributionControl: false }).setView(
+    this.map = L.map("map", { attributionControl: false, layers:[CartoDB_DarkMatter] }).setView(
       DEFAULT_LOCATION,
       DEFAULT_ZOOM
     );
     CartoDB_DarkMatter.addTo(this.map);
     this.addControls();
     this.toggleControls();
+    var layerControl = L.control.layers(baseMaps, overlays).addTo(this.map);
 
     // get geoJSON of geoman
     this.map.on("pm:create", function (e) {
@@ -83,7 +93,7 @@ class createMap {
     });
 
     //to show heatmap
-    let heat = L.heatLayer(heatmapData, {radius: 20}).addTo(this.map);
+    // let heat = L.heatLayer(heatmapData, {radius: 20}).addTo(this.map);
 
     L.control.scale({ imperial: false }).addTo(this.map);
   }
