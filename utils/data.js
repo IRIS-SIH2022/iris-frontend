@@ -79,7 +79,7 @@ export const markerData = [
   },
   {
     lat: 28.617,
-    lng: 77.220,
+    lng: 77.22,
     crime: "Burglary",
     time: 1658302632,
     intensity: "",
@@ -91,9 +91,7 @@ export const markerData = [
     time: 1658301783,
     intensity: "",
   },
- 
 ];
-
 
 export const geoJSONLayer = [
   {
@@ -205,40 +203,39 @@ export const markerFilter = markerData.filter((item) => {
 });
 
 export const crimeJSON = {
-  "Murder": {
-    "color": "#c30b82",
-    "intensity": 70
+  Murder: {
+    color: "#c30b82",
+    intensity: 70,
   },
-  "Assault": {
-    "color": "#74D173",
-    "intensity": 40
+  Assault: {
+    color: "#74D173",
+    intensity: 40,
   },
-  "Theft": {
-    "color": "#00b5b9",
-    "intensity": 30
+  Theft: {
+    color: "#00b5b9",
+    intensity: 30,
   },
-  "Burglary": {
-    "color": "#f5df62",
-    "intensity": 30
+  Burglary: {
+    color: "#f5df62",
+    intensity: 30,
   },
-  "Drugs": {
-    "color": "#eb7953",
-    "intensity": 80
+  Drugs: {
+    color: "#eb7953",
+    intensity: 80,
   },
-  "Other": {
-    "color": "#a393d1",
-    "intensity": 50
-  }
-}
-
+  Other: {
+    color: "#a393d1",
+    intensity: 50,
+  },
+};
 
 let crimeHeatData = [];
-for(let i=0;i<markerData.length;i++){
+for (let i = 0; i < markerData.length; i++) {
   let heatValue = [];
-  heatValue.push(markerData[i]['lat']);
-  heatValue.push(markerData[i]['lng']);
-  heatValue.push(crimeJSON[markerData[i]['crime']]["intensity"]);
-  crimeHeatData.push(heatValue)
+  heatValue.push(markerData[i]["lat"]);
+  heatValue.push(markerData[i]["lng"]);
+  heatValue.push(crimeJSON[markerData[i]["crime"]]["intensity"]);
+  crimeHeatData.push(heatValue);
 }
 
 export const heatmapData = crimeHeatData;

@@ -2,7 +2,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
-import "https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"
+import "leaflet.heat";
 import { crimeJSON, heatmapData, markerData } from "./data";
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
@@ -17,19 +17,22 @@ const CartoDB_DarkMatter = L.tileLayer(
   }
 );
 
-const heatmapLayer = L.heatLayer(heatmapData, {radius: 20});
+const heatmapLayer = L.heatLayer(heatmapData, { radius: 20 });
 
 const baseMaps = {
-  "Normal map": CartoDB_DarkMatter
+  "Normal map": CartoDB_DarkMatter,
 };
 const overlays = {
-  "Heatmap": heatmapLayer
+  Heatmap: heatmapLayer,
 };
 
 const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
-  const crimeColors = crimeJSON[crime]
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]};"></div>`
+  const crimeColors = crimeJSON[crime];
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
+    crimeColors["color"]
+  };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
+    crimeColors["color"]
+  };"></div>`;
 
   let icon = L.divIcon({
     className: "custom-div-icon",
@@ -38,12 +41,16 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
 
   //rings around latest crimes
   if (hoursDifference <= 24) {
-    HTMLdata = 
-    `<div class='ring3' style="border: 1px solid ${crimeColors["color"]};">
+    HTMLdata = `<div class='ring3' style="border: 1px solid ${
+      crimeColors["color"]
+    };">
       <div class='ring2' style="border: 1px solid ${crimeColors["color"]};">
         <div class='ring1' style="border: 1px solid ${crimeColors["color"]};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
-            };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]};  position: absolute;
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
+      crimeColors["color"]
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
+      crimeColors["color"]
+    };  position: absolute;
             top: 50%;
             left: 50%;
             margin-right: -50%;
@@ -51,7 +58,7 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
           </div>
         </div>
       </div>
-    </div>`
+    </div>`;
     icon = L.divIcon({
       className: "custom-div-icon",
       html: HTMLdata,
@@ -71,14 +78,14 @@ class createMap {
     this.setLoad = false;
     this.markers = [];
     this.boundaries = [];
-    this.map = L.map("map", { attributionControl: false, layers:[CartoDB_DarkMatter] }).setView(
-      DEFAULT_LOCATION,
-      DEFAULT_ZOOM
-    );
+    this.map = L.map("map", {
+      attributionControl: false,
+      layers: [CartoDB_DarkMatter],
+    }).setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
     CartoDB_DarkMatter.addTo(this.map);
     this.addControls();
     this.toggleControls();
-    var layerControl = L.control.layers(baseMaps, overlays).addTo(this.map);
+    let layerControl = L.control.layers(baseMaps, overlays).addTo(this.map);
 
     // get geoJSON of geoman
     this.map.on("pm:create", function (e) {
@@ -146,17 +153,19 @@ class createMap {
       let difference = Date.now() - marker.time * 1000;
       let hoursDifference = Math.floor(difference / 1000 / 60 / 60);
       let crimeAge;
-      if (hoursDifference <= 1)
-        crimeAge = 3;
-      else if (hoursDifference <= 24)
-        crimeAge = 2;
-      else
-        crimeAge = 1;
+      if (hoursDifference <= 1) crimeAge = 3;
+      else if (hoursDifference <= 24) crimeAge = 2;
+      else crimeAge = 1;
 
-      console.log(crimeAge, hoursDifference)
-      return createCustomMarker(marker.lat, marker.lng, marker.crime, crimeAge, hoursDifference)
-    }
-    );
+      console.log(crimeAge, hoursDifference);
+      return createCustomMarker(
+        marker.lat,
+        marker.lng,
+        marker.crime,
+        crimeAge,
+        hoursDifference
+      );
+    });
     // add markers
     this.markers.map((marker) => {
       marker.addTo(this.map);
