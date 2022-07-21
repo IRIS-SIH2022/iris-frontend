@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"
+import { crimeJSON, heatmapData, markerData } from "./data";
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
 
@@ -17,10 +18,9 @@ const CartoDB_DarkMatter = L.tileLayer(
 );
 
 const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
-  const crimeColors = { Murder: "#c30b82", Assault: "#74D173", Theft: "#00b5b9", Burglary: "#f5df62", Drugs: "#eb7953", Other: "#a393d1" };
-
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors[crime]
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors[crime]};"></div>`
+  const crimeColors = crimeJSON[crime]
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]};"></div>`
 
   let icon = L.divIcon({
     className: "custom-div-icon",
@@ -30,11 +30,11 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
   //rings around latest crimes
   if (hoursDifference <= 24) {
     HTMLdata = 
-    `<div class='ring3' style="border: 1px solid ${crimeColors[crime]};">
-      <div class='ring2' style="border: 1px solid ${crimeColors[crime]};">
-        <div class='ring1' style="border: 1px solid ${crimeColors[crime]};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors[crime]
-            };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors[crime]};  position: absolute;
+    `<div class='ring3' style="border: 1px solid ${crimeColors["color"]};">
+      <div class='ring2' style="border: 1px solid ${crimeColors["color"]};">
+        <div class='ring1' style="border: 1px solid ${crimeColors["color"]};">
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
+            };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]};  position: absolute;
             top: 50%;
             left: 50%;
             margin-right: -50%;
@@ -81,21 +81,9 @@ class createMap {
         JSON.stringify(geoJSONLayer)
       );
     });
-    var heat = L.heatLayer([
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [22.629799, 80.212343, 10000000], // lat, lng, intensity
-      [23.629799, 80.212343, 0.5],
-      
-    ], {radius: 25}).addTo(this.map);
+
+    //to show heatmap
+    let heat = L.heatLayer(heatmapData, {radius: 20}).addTo(this.map);
 
     L.control.scale({ imperial: false }).addTo(this.map);
   }

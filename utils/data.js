@@ -3,14 +3,14 @@ export const markerData = [
     lat: 28.6139,
     lng: 77.209,
     crime: "Murder",
-    time: 1658301783,
+    time: 1658300783,
     intensity: "",
   },
   {
     lat: 28.6148,
     lng: 77.211,
     crime: "Murder",
-    time: 1658301783,
+    time: 1658201783,
     intensity: "",
   },
   {
@@ -21,7 +21,7 @@ export const markerData = [
     intensity: "",
   },
   {
-    lat: 28.629799,
+    lat: 28.620799,
     lng: 77.212343,
     crime: "Assault",
     time: 1658101083,
@@ -29,9 +29,9 @@ export const markerData = [
   },
   {
     lat: 28.625,
-    lng: 77.2,
+    lng: 77.22,
     crime: "Murder",
-    time: 1658300783,
+    time: 1658000783,
     intensity: "",
   },
   {
@@ -41,7 +41,59 @@ export const markerData = [
     time: 1658130003,
     intensity: "",
   },
+  {
+    lat: 28.624,
+    lng: 77.213,
+    crime: "Drugs",
+    time: 1658130003,
+    intensity: "",
+  },
+  {
+    lat: 28.629,
+    lng: 77.213,
+    crime: "Drugs",
+    time: 1658130203,
+    intensity: "",
+  },
+  {
+    lat: 28.624,
+    lng: 77.218,
+    crime: "Other",
+    time: 1658130003,
+    intensity: "",
+  },
+  {
+    lat: 28.609,
+    lng: 77.218,
+    crime: "Other",
+    time: 1658130003,
+    intensity: "",
+  },
+
+  {
+    lat: 28.629,
+    lng: 77.218,
+    crime: "Burglary",
+    time: 1658130003,
+    intensity: "",
+  },
+  {
+    lat: 28.617,
+    lng: 77.220,
+    crime: "Burglary",
+    time: 1658302632,
+    intensity: "",
+  },
+  {
+    lat: 28.6139,
+    lng: 77.219,
+    crime: "Theft",
+    time: 1658301783,
+    intensity: "",
+  },
+ 
 ];
+
 
 export const geoJSONLayer = [
   {
@@ -155,26 +207,38 @@ export const markerFilter = markerData.filter((item) => {
 export const crimeJSON = {
   "Murder": {
     "color": "#c30b82",
-    "intensity": 7
+    "intensity": 70
   },
   "Assault": {
     "color": "#74D173",
-    "intensity": 4
+    "intensity": 40
   },
   "Theft": {
     "color": "#00b5b9",
-    "intensity": 3
+    "intensity": 30
   },
   "Burglary": {
     "color": "#f5df62",
-    "intensity": 3
+    "intensity": 30
   },
   "Drugs": {
     "color": "#eb7953",
-    "intensity": 8
+    "intensity": 80
   },
   "Other": {
     "color": "#a393d1",
-    "intensity": 5
+    "intensity": 50
   }
 }
+
+
+let crimeHeatData = [];
+for(let i=0;i<markerData.length;i++){
+  let heatValue = [];
+  heatValue.push(markerData[i]['lat']);
+  heatValue.push(markerData[i]['lng']);
+  heatValue.push(crimeJSON[markerData[i]['crime']]["intensity"]);
+  crimeHeatData.push(heatValue)
+}
+
+export const heatmapData = crimeHeatData;
