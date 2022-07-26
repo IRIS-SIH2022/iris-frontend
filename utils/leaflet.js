@@ -189,12 +189,16 @@ class createMap {
   }
 
   clearMap() {
-    this.boundaries = L.geoJSON();
-    this.markers = [];
-    this.heatmapData = [];
-    this.boundariesLayer.clearLayers();
-    this.markerLayer.clearLayers();
-    this.heatMapLayer.setLatLngs([]);
+    try {
+      this.boundaries = L.geoJSON();
+      this.markers = [];
+      this.heatmapData = [];
+      this.boundariesLayer.clearLayers();
+      this.markerLayer.clearLayers();
+      this.heatMapLayer.setLatLngs([]);
+    } catch {
+      console.log("error");
+    }
   }
 
   applyFilter(boundary, markers) {
@@ -202,6 +206,7 @@ class createMap {
 
     if (boundary.length > 0) this.boundaries = L.geoJSON(boundary);
     else {
+      // if boundary not present then set default bounds
       this.changeView(BOUNDS);
       return;
     }

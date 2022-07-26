@@ -24,7 +24,7 @@ blocks.forEach((item) => {
   document.getElementById("block").appendChild(item);
 });
 
-document.getElementById("filter-form").addEventListener("submit", (e) => {
+document.getElementById("filter-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
@@ -34,6 +34,12 @@ document.getElementById("filter-form").addEventListener("submit", (e) => {
   // make request to backend
   // get geoJSON of markers and boundaries
   // apply filter to map
+
+  // const request = await fetch(
+  //   `/api/v1/filter?cctns=${cctns}&block=${block}&crime=${crime}&act=${act}`
+  // );
+  // const data = await request.json();
+  // map.applyFilter(data.boundaryData, data.markerData);
 
   // temp code to check functionality
   if (cctns === "" && block === "all" && crime === "all") {
