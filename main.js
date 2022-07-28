@@ -8,6 +8,13 @@ import {
   markerFilter,
 } from "./utils/data";
 
+import {allIndia } from "./utils/india_taluk"
+
+// import { allIndia } from "./utils/data.js";
+// |
+// |
+// ---- uncomment this for the ditrict-wise visualization
+
 let map = new createMap();
 
 // render blocks from geoJSONLayer
@@ -43,7 +50,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
 
   // temp code to check functionality
   if (cctns === "" && block === "all" && crime === "all") {
-    map.applyFilter(geoJSONLayer, markerData);
+    map.applyFilter(allIndia.features, markerData);
   } else if (cctns === "" && block === "all" && crime !== "all") {
     map.applyFilter(geoJSONLayer, markerFilter);
   } else if (cctns === "" && block !== "all" && crime === "all") {
