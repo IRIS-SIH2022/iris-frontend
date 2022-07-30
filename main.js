@@ -50,7 +50,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
 
   // temp code to check functionality
   if (cctns === "" && block === "all" && crime === "all") {
-    map.applyFilter(allIndia.features, markerData);
+    map.applyFilter(geoJSONLayer, markerData);
   } else if (cctns === "" && block === "all" && crime !== "all") {
     map.applyFilter(geoJSONLayer, markerFilter);
   } else if (cctns === "" && block !== "all" && crime === "all") {

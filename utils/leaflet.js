@@ -109,7 +109,7 @@ class createMap {
       maxBounds: BOUNDS,
     }).setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
     this.addControls();
-    this.toggleControls();
+    // this.toggleControls();
     this.layerControl = L.control.layers(baseMaps).addTo(this.map);
 
     // add marker layer
