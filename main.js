@@ -1,14 +1,9 @@
 import "./style.css";
 import createMap from "./utils/leaflet";
 
-import {
-  markerData,
-  geoJSONLayer,
-  mapFilter,
-  markerFilter,
-} from "./utils/data";
+import { geoJSONLayer, mapFilter, markerFilter } from "./utils/data";
 
-import {allIndia } from "./utils/india_taluk"
+import { delhiCrimeDataset } from "./utils/delhiCrimeData";
 
 // import { allIndia } from "./utils/data.js";
 // |
@@ -50,7 +45,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
 
   // temp code to check functionality
   if (cctns === "" && block === "all" && crime === "all") {
-    map.applyFilter(geoJSONLayer, markerData);
+    map.applyFilter(geoJSONLayer, delhiCrimeDataset);
   } else if (cctns === "" && block === "all" && crime !== "all") {
     map.applyFilter(geoJSONLayer, markerFilter);
   } else if (cctns === "" && block !== "all" && crime === "all") {

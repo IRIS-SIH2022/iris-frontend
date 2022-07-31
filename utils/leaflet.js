@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "leaflet.heat";
-import { crimeJSON, heatmapData, markerData } from "./data";
+import { crimeJSON } from "./data";
 
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
@@ -109,7 +109,7 @@ class createMap {
       maxBounds: BOUNDS,
     }).setView(DEFAULT_LOCATION, DEFAULT_ZOOM);
     this.addControls();
-    // this.toggleControls();
+    this.toggleControls();
     this.layerControl = L.control.layers(baseMaps).addTo(this.map);
 
     // add marker layer
@@ -229,9 +229,13 @@ class createMap {
         );
       });
 
-    // TODO - calculate heatmap data from markers or get it from the server
-    // also add necessary checks for empty arrays
-    this.heatmapData = heatmapData;
+    this.heatmapData = markers.map((item) => {
+      let tmp = [];
+      tmp.push(item["lat"]);
+      tmp.push(item["lng"]);
+      tmp.push(crimeJSON[item["crime"]]["intensity"]);
+      return tmp;
+    });
 
     if (this.map.hasLayer(this.heatMapLayer)) this.addHeatmap();
     if (this.map.hasLayer(this.markerLayer)) this.addMarkers();
