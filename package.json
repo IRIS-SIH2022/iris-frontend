@@ -17,7 +17,9 @@
   },
   "dependencies": {
     "@geoman-io/leaflet-geoman-free": "^2.13.0",
+    "chart.js": "^3.8.2",
     "leaflet": "^1.8.0",
+    "leaflet-maskcanvas": "^1.0.0",
     "leaflet.heat": "^0.2.0"
   }
 }
