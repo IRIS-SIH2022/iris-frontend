@@ -1,22 +1,110 @@
-import Chart from 'chart.js';
+let position = 0;
 
+const jsonData = {
+  'Murder':10,
+  'Rape':12,
+  'Chain Snatching':44,
+  'Kidnapping':64
+}
 
-function makeChartCategoryTrends(jsonData, categoryName) {
-  document.getElementById('categoryCharts').style.height = '300px';
-  document.getElementById('categoryCharts').innerHTML = `
-  <div class="chartTrend">
-    <canvas id="categoryChart" style="width: 85%; height: 300px;display: inline-block;"></canvas>
-  </div>
-  `
+const numberOfGraphs = 3;
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  document.getElementById('nextGraphButton').onclick = nextGraph;
+  document.getElementById('prevGraphButton').onclick = prevGraph;
+});
+
+function makeDoughnutChart(jsonData) {
+  
   const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
-  categoryChartCTX = document.getElementById('categoryChart').getContext('2d');
+  const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
 
   var xValues = Object.keys(jsonData);
   var yValues = Object.values(jsonData);
   var barColors = [];
 
-  for (i = 0; i < xValues.length; i++) {
+  for (let i = 0; i < xValues.length; i++) {
+    barColors.push(colorArray[i % 20]);
+  }
+
+  new Chart(categoryChartCTX, {
+    type: "doughnut",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        borderColor: '#A9A9A9',
+        fill: false,
+        data: yValues
+      }]
+    },
+    options: {
+      elements: {
+        line: {
+            tension: 0
+        }
+    },
+      legend: { display: false },
+      title: {
+        display: true,
+        text: `Crime trend`
+      }
+    }
+  });
+}
+
+function makePieChart(jsonData) {
+  
+  const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
+
+  const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
+
+  var xValues = Object.keys(jsonData);
+  var yValues = Object.values(jsonData);
+  var barColors = [];
+
+  for (let i = 0; i < xValues.length; i++) {
+    barColors.push(colorArray[i % 20]);
+  }
+
+  new Chart(categoryChartCTX, {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        borderColor: '#A9A9A9',
+        fill: false,
+        data: yValues
+      }]
+    },
+    options: {
+      elements: {
+        line: {
+            tension: 0
+        }
+    },
+      legend: { display: false },
+      title: {
+        display: true,
+        text: `Crime trend`
+      }
+    }
+  });
+}
+
+function makeLineChart(jsonData) {
+  
+  const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
+
+  const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
+
+  var xValues = Object.keys(jsonData);
+  var yValues = Object.values(jsonData);
+  var barColors = [];
+
+  for (let i = 0; i < xValues.length; i++) {
     barColors.push(colorArray[i % 20]);
   }
 
@@ -40,8 +128,39 @@ function makeChartCategoryTrends(jsonData, categoryName) {
       legend: { display: false },
       title: {
         display: true,
-        text: `Monthly Trends for ${categoryName}`
+        text: `Crime trend`
       }
     }
   });
 }
+
+function nextGraph(){
+  position = (position +1) % numberOfGraphs;
+  makeGraph();
+}
+function prevGraph(){
+  position = position-1;
+  if(position==-1)
+    position = numberOfGraphs;
+  makeGraph();
+}
+
+function makeGraph(){
+  switch(position){
+    case 0:
+      makeLineChart(jsonData);
+      break;
+    case 1:
+      makePieChart(jsonData);
+      break;
+    case 2:
+      makeDoughnutChart(jsonData)
+      break;
+    default:
+      break;
+  }
+}
+
+
+const testChartData = {'January':200,'Februrary':300,'March':260,'April':800}
+makeLineChart(testChartData)
