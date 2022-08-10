@@ -4,6 +4,7 @@ import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "leaflet.heat";
 import { crimeJSON } from "./data";
+import { activateCCTV } from "./cctv";
 
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
@@ -49,7 +50,7 @@ const baseMaps = {
   "Detailed Map": CartoDB_Voyager,
 };
 
-const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
+const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference, cctvId) => {
   const crimeColors = crimeJSON[crime];
   let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
     crimeColors["color"]
@@ -91,7 +92,10 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference) => {
   const newMarker = L.marker([lat, lng], {
     icon,
     crime,
-  }).bindPopup("Some info");
+  }).bindPopup("Some info")
+  .on('click',function() {
+    activateCCTV(cctvId);
+  });
 
   return newMarker;
 };
@@ -225,7 +229,8 @@ class createMap {
           marker.lng,
           marker.crime,
           crimeAge,
-          hoursDifference
+          hoursDifference,
+          '#1234' // cctv id
         );
       });
 
