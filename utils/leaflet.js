@@ -172,6 +172,7 @@ class createMap {
   }
 
   addBoundaries() {
+    console.log(this.boundaries)
     this.boundariesLayer.addLayer(this.boundaries);
   }
 
