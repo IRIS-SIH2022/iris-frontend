@@ -96,7 +96,7 @@ export const markerData = [
 export const geoJSONLayer = [
   {
     type: "Feature",
-    properties: { id: 1, name: "KAPASHERA" },
+    properties: { stationID: 1, name: "KAPASHERA", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -123,7 +123,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 2, name: "VASANT KUNJ SOUTH" },
+    properties: { stationID: 2, name: "VASANT KUNJ SOUTH", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -153,7 +153,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 3, name: "VASANT KUNJ NORTH" },
+    properties: { stationID: 3, name: "VASANT KUNJ NORTH", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -193,7 +193,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 4, name: "VASANT VIHAR" },
+    properties: { stationID: 4, name: "VASANT VIHAR", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -225,7 +225,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 5, name: "R.K. PURAM" },
+    properties: { stationID: 5, name: "R.K. PURAM", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -248,7 +248,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 6, name: "SOUTH CAMPUS" },
+    properties: { stationID: 6, name: "SOUTH CAMPUS", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -276,7 +276,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 7, name: "PP SUBROTO PARK" },
+    properties: { stationID: 7, name: "PP SUBROTO PARK", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -311,7 +311,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 8, name: "DELHI CANTT." },
+    properties: { stationID: 8, name: "DELHI CANTT.", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -351,7 +351,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 9, name: "SAGARPUR" },
+    properties: { stationID: 9, name: "SAGARPUR", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -379,7 +379,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 10, name: "PALAM VILLAGE" },
+    properties: { stationID: 10, name: "PALAM VILLAGE", district: "SOUTH-WEST DISTRICT" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -406,7 +406,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 11, name: "JAFARPUR KALAN", district: "DWARKA" },
+    properties: { stationID: 11, name: "JAFARPUR KALAN", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -458,7 +458,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12, name: "CHHAWALA", district: "DWARKA" },
+    properties: { stationID: 12, name: "CHHAWALA", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -502,7 +502,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 21, name: "BABA HARIDAS NAGAR", district: "DWARKA" },
+    properties: { stationID: 13, name: "BABA HARIDAS NAGAR", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -535,7 +535,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 20, name: "NAJAFGARH", district: "DWARKA" },
+    properties: { stationID: 14, name: "NAJAFGARH", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -571,7 +571,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 19, name: "PS. UTTAM NAGAR", district: "DWARKA" },
+    properties: { stationID: 15, name: "PS. UTTAM NAGAR", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -594,7 +594,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 1233, name: "TEST1", district: "DWARKA" },
+    properties: { stationID: 16, name: "PP SEC.3 DWK", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -618,7 +618,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12334, name: "TEST2", district: "DWARKA" },
+    properties: { stationID: 17, name: "DWARKA NORTH", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -652,7 +652,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12334, name: "TEST3", district: "DWARKA" },
+    properties: { stationID: 18, name: "BINDAPUR", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -682,7 +682,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12334, name: "TEST4", district: "DWARKA" },
+    properties: { stationID: 19, name: "DABRI", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -722,7 +722,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12334, name: "TEST5", district: "DWARKA" },
+    properties: { stationID: 20, name: "PP SEC.1 DWK", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -750,7 +750,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12334, name: "TEST6", district: "DWARKA" },
+    properties: { stationID: 21, name: "DWARKA SOUTH", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -777,7 +777,7 @@ export const geoJSONLayer = [
   },
   {
     type: "Feature",
-    properties: { id: 12334, name: "TEST7", district: "DWARKA" },
+    properties: { stationID: 22, name: "DWARKA SEC.23", district: "DWARKA" },
     geometry: {
       type: "Polygon",
       coordinates: [

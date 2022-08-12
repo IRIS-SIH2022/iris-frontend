@@ -5,6 +5,7 @@ import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "leaflet.heat";
 import { crimeJSON } from "./data";
 import { activateCCTV } from "./cctv";
+import { clearPoliceStationData, showPoliceStationData } from "./stationHover";
 
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
@@ -52,11 +53,9 @@ const baseMaps = {
 
 const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference, cctvId) => {
   const crimeColors = crimeJSON[crime];
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
-    crimeColors["color"]
-  };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
-    crimeColors["color"]
-  };"></div>`;
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
+    };"></div>`;
 
   let icon = L.divIcon({
     className: "custom-div-icon",
@@ -65,16 +64,13 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference, cctv
 
   //rings around latest crimes
   if (hoursDifference <= 44) {
-    HTMLdata = `<div class='ring3' style="border: 1px solid ${
-      crimeColors["color"]
-    };">
+    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors["color"]
+      };">
       <div class='ring2' style="border: 1px solid ${crimeColors["color"]};">
         <div class='ring1' style="border: 1px solid ${crimeColors["color"]};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
-      crimeColors["color"]
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
-      crimeColors["color"]
-    };  position: absolute;
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
+      };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
+      };  position: absolute;
             top: 50%;
             left: 50%;
             margin-right: -50%;
@@ -93,9 +89,9 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference, cctv
     icon,
     crime,
   }).bindPopup("Some info")
-  .on('click',function() {
-    activateCCTV(cctvId);
-  });
+    .on('click', function () {
+      activateCCTV(cctvId);
+    });
 
   return newMarker;
 };
@@ -172,7 +168,6 @@ class createMap {
   }
 
   addBoundaries() {
-    console.log(this.boundaries)
     this.boundariesLayer.addLayer(this.boundaries);
   }
 
@@ -209,7 +204,34 @@ class createMap {
   applyFilter(boundary, markers) {
     this.clearMap();
 
-    if (boundary.length > 0) this.boundaries = L.geoJSON(boundary);
+    if (boundary.length > 0) {
+      this.boundaries = L.geoJSON(null,{
+        style:function (feature){
+          return{
+            color: "blue",
+            fill:true,
+            opacity: 0.8
+          };
+        },
+        onEachFeature(feature,layer){
+          layer.on('mouseover',function(){
+            this.setStyle({
+              'fillColor':"green"
+            });
+            showPoliceStationData(feature);
+          })
+          layer.on('mouseout', function (){
+            this.setStyle({
+              'fillColor':'blue'
+            });
+            setTimeout(()=>{
+              clearPoliceStationData()
+            },5000)
+          })
+        }
+      });
+      this.boundaries.addData(boundary);
+    }
     else {
       // if boundary not present then set default bounds
       this.changeView(BOUNDS);

@@ -11,6 +11,6 @@ export async function activateCCTV(cctvID) {
 
   document.getElementById('cctvArea').innerHTML = `      
   <iframe width="100%" height="80%" src="${url}" frameborder="0"></iframe>
-  <div class = "text-left font-bold text-xl text-black dark:text-white">Playing video from the cctvID: ${cctvID}</div>
+  <div class = "text-left font-bold text-l text-black dark:text-white">Playing video from the cctvID: ${cctvID}</div>
 `
 }
