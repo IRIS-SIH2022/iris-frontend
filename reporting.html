@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iris - crime reporting</title>
+  </head>
+  <body>
+    <div class="p-6">
+      <p class="text-3xl font-bold text-center">Crime Reporting Portal</p>
+    </div>
+    <div
+      class="w-full md:w-full md:max-w-full mx-auto my-auto flex justify-center"
+    >
+      <div class="p-6 border border-gray-300 sm:rounded-md">
+        <form method="POST" enctype="multipart/form-data" id="report-form">
+          <label class="block mb-6">
+            <div
+              id="map"
+              class="shadow-lg rounded-2xl bg-white dark:bg-gray-700 w-full h-64"
+            ></div>
+          </label>
+
+          <label class="flex mb-6">
+            <span class="text-gray-700 w-2/5">Your Location</span>
+            <input hidden name="lat" id="lat" />
+            <input hidden name="long" id="long" />
+            <input
+              id="location"
+              class="w-3/5 ml-2 text-center border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              placeholder="Your Location"
+              disabled
+            />
+          </label>
+          <hr class="p-2" />
+
+          <!-- <label class="block mb-6">
+            <span class="text-gray-700">Your name</span>
+            <input
+              name="name"
+              type="text"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              placeholder="Enter Your Name"
+            />
+          </label> -->
+          <!-- <label class="block mb-6">
+            <span class="text-gray-700">Email address</span>
+            <input
+              name="email"
+              type="email"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              placeholder="joe.bloggs@example.com"
+            />
+          </label> -->
+          <label class="block mb-6">
+            <span class="text-gray-700">Type of crime</span>
+            <select
+              name="experience"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+              <option>Less than a year</option>
+              <option>1 - 2 years</option>
+              <option>2 - 4 years</option>
+              <option>4 - 7 years</option>
+              <option>7 - 10 years</option>
+              <option>10+ years</option>
+            </select>
+          </label>
+          <label class="block mb-6">
+            <span class="text-gray-700">Description of crime</span>
+            <textarea
+              name="message"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              rows="3"
+              placeholder="Describe the incidence"
+            ></textarea>
+          </label>
+          <label class="block mb-6">
+            <span class="text-gray-700">Upload Image</span>
+            <input
+              name="photo-upload"
+              id="photo-upload"
+              type="file"
+              accept="image/*"
+              capture="camera"
+              class="block w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+          </label>
+          <!-- <div class="mb-6">
+            <div class="mt-2">
+              <div>
+                <label class="inline-flex items-center">
+                  <input
+                    name="remote"
+                    value="yes"
+                    type="radio"
+                    class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                    checked
+                  />
+                  <span class="ml-2">You'd like to work remotely</span>
+                </label>
+              </div>
+              <div>
+                <label class="inline-flex items-center">
+                  <input
+                    name="re"
+                    value="no"
+                    type="radio"
+                    class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                  />
+                  <span class="ml-2">You'd prefer to work onsite</span>
+                </label>
+              </div>
+            </div>
+          </div> -->
+          <div class="mb-6">
+            <button
+              id="submit-report"
+              type="submit"
+              class="h-10 px-5 text-indigo-100 bg-indigo-700 rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-800"
+            >
+              Apply
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script type="module" src="/user.js"></script>
+  </body>
+</html>
