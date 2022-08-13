@@ -55,8 +55,8 @@ const baseMaps = {
   "Detailed Map": CartoDB_Voyager,
 };
 
-const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference, cctvId) => {
-  const crimeColors = crimeJSON[crime];
+const createCustomMarker = (markerData, crimeAge = 2, hoursDifference, cctvId) => {
+  const crimeColors = crimeJSON[markerData.crime];
   let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
     };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
     };"></div>`;
@@ -88,11 +88,13 @@ const createCustomMarker = (lat, lng, crime, crimeAge = 2, hoursDifference, cctv
       html: HTMLdata,
     });
   }
+  
+  const crime = markerData.crime;
 
-  const newMarker = L.marker([lat, lng], {
+  const newMarker = L.marker([markerData.lat, markerData.lng], {
     icon,
-    crime,
-  }).bindPopup("Some info")
+    crime
+  }).bindPopup(`<div><h3><strong>Case Number: </strong>${markerData['Case Number']}</h3><br><strong>Crime Type: </strong>${markerData['Primary Type']}<br><strong>Description: </strong>${markerData['Description']}<br><strong>Crime Date and Time: </strong>${markerData['Date']} <h1>Crime Color Name: ${markerData.crime}</h1></div>`)
     .on('click', function () {
       activateCCTV(cctvId);
     });
@@ -251,11 +253,8 @@ class createMap {
         if (hoursDifference <= 1) crimeAge = 3;
         else if (hoursDifference <= 24) crimeAge = 2;
         else crimeAge = 1;
-
         return createCustomMarker(
-          marker.lat,
-          marker.lng,
-          marker.crime,
+          marker,
           crimeAge,
           hoursDifference,
           '#1234' // cctv id

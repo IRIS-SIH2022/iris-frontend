@@ -1,7 +1,7 @@
 async function getCCTVStreamFromID(cctvID){
   
   // something to get stream from the cctv using the cctv id
-  const url = 'https://www.youtube.com/'
+  const url = 'https://www.youtube.com/watch?v=JHu2YuadxKg'
 
   return url;
 }
