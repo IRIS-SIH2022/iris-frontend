@@ -16,8 +16,8 @@ let map = new createMap();
 const blocks = geoJSONLayer
   .map((item) => {
     const opt = document.createElement("option");
-    opt.value = item.properties.name;
-    opt.innerText = item.properties.name;
+    opt.value = item.name;
+    opt.innerText = item.name;
     return opt;
   })
   .sort((a, b) => a.value.localeCompare(b.value));

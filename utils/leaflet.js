@@ -7,6 +7,10 @@ import { crimeJSON } from "./data";
 import { activateCCTV } from "./cctv";
 import { clearPoliceStationData, showPoliceStationData } from "./stationHover";
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
 const BOUNDS = new L.latLngBounds(
@@ -126,7 +130,7 @@ class createMap {
     this.map.on("pm:create", function (e) {
       let id = 12334; // generate uuid for the polygon
       let geoJSONLayer = e.layer.toGeoJSON();
-      geoJSONLayer.properties.id = id;
+      geoJSONLayer.stationID = id;
 
       window.prompt(
         "Copy to clipboard: Ctrl+C, Enter",
@@ -224,9 +228,10 @@ class createMap {
             this.setStyle({
               'fillColor':'blue'
             });
-            setTimeout(()=>{
-              clearPoliceStationData()
-            },5000)
+            
+            sleep(7000).then(()=>
+            clearPoliceStationData()
+            );
           })
         }
       });

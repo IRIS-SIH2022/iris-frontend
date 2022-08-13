@@ -1,21 +1,21 @@
 let position = 0;
 
 const jsonData = {
-  'Murder':10,
-  'Rape':12,
-  'Chain Snatching':44,
-  'Kidnapping':64
+  'Murder': 10,
+  'Rape': 12,
+  'Chain Snatching': 44,
+  'Kidnapping': 64
 }
 
 const numberOfGraphs = 3;
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
   document.getElementById('nextGraphButton').onclick = nextGraph;
   document.getElementById('prevGraphButton').onclick = prevGraph;
 });
 
 function makeDoughnutChart(jsonData) {
-  
+
   const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
   const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
@@ -42,9 +42,9 @@ function makeDoughnutChart(jsonData) {
     options: {
       elements: {
         line: {
-            tension: 0
+          tension: 0
         }
-    },
+      },
       legend: { display: false },
       title: {
         display: true,
@@ -55,7 +55,7 @@ function makeDoughnutChart(jsonData) {
 }
 
 function makePieChart(jsonData) {
-  
+
   const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
   const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
@@ -82,9 +82,9 @@ function makePieChart(jsonData) {
     options: {
       elements: {
         line: {
-            tension: 0
+          tension: 0
         }
-    },
+      },
       legend: { display: false },
       title: {
         display: true,
@@ -95,7 +95,7 @@ function makePieChart(jsonData) {
 }
 
 function makeLineChart(jsonData) {
-  
+
   const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
   const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
@@ -122,9 +122,9 @@ function makeLineChart(jsonData) {
     options: {
       elements: {
         line: {
-            tension: 0
+          tension: 0
         }
-    },
+      },
       legend: { display: false },
       title: {
         display: true,
@@ -134,19 +134,38 @@ function makeLineChart(jsonData) {
   });
 }
 
-function nextGraph(){
-  position = (position +1) % numberOfGraphs;
+function nextGraph() {
+  position = (position + 1) % numberOfGraphs;
   makeGraph();
+  shuffleChart();
 }
-function prevGraph(){
-  position = position-1;
-  if(position==-1)
+function prevGraph() {
+  position = position - 1;
+  if (position == -1)
     position = numberOfGraphs;
   makeGraph();
+  shuffleChart();
 }
 
-function makeGraph(){
-  switch(position){
+let flag = 1;
+
+function shuffleChart() {
+  // hold the graph for 30 seconds before shuffling
+  flag == 0;
+  setTimeout(() => {
+    flag == 1;
+  }, 30000);
+}
+// switch the graphs if no particular graph is selected
+
+  if (flag == 1) {
+    setTimeout(() => {
+      nextGraph();
+    }, 7000)
+  }
+
+function makeGraph() {
+  switch (position) {
     case 0:
       makeLineChart(jsonData);
       break;
@@ -162,5 +181,5 @@ function makeGraph(){
 }
 
 
-const testChartData = {'January':200,'Februrary':300,'March':260,'April':800}
+const testChartData = { 'January': 200, 'Februrary': 300, 'March': 260, 'April': 800 }
 makeLineChart(testChartData)
