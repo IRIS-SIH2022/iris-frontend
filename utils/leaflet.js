@@ -1,4 +1,4 @@
-import L, { latLng } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
@@ -8,7 +8,7 @@ import { activateCCTV } from "./cctv";
 import { clearPoliceStationData, showPoliceStationData } from "./stationHover";
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 const DEFAULT_LOCATION = [22.629799, 80.212343];
@@ -49,17 +49,32 @@ const CartoDB_Positron = L.tileLayer(
   }
 );
 
+const OpenStreetMap = L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }
+);
+
 const baseMaps = {
   "Dark Map": CartoDB_DarkMatter,
   "Light Map": CartoDB_Positron,
   "Detailed Map": CartoDB_Voyager,
 };
 
-const createCustomMarker = (markerData, crimeAge = 2, hoursDifference, cctvId) => {
+const createCustomMarker = (
+  markerData,
+  crimeAge = 2,
+  hoursDifference,
+  cctvId
+) => {
   const crimeColors = crimeJSON[markerData.crime];
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
-    };"></div>`;
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
+    crimeColors["color"]
+  };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
+    crimeColors["color"]
+  };"></div>`;
 
   let icon = L.divIcon({
     className: "custom-div-icon",
@@ -68,13 +83,16 @@ const createCustomMarker = (markerData, crimeAge = 2, hoursDifference, cctvId) =
 
   //rings around latest crimes
   if (hoursDifference <= 44) {
-    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors["color"]
-      };">
+    HTMLdata = `<div class='ring3' style="border: 1px solid ${
+      crimeColors["color"]
+    };">
       <div class='ring2' style="border: 1px solid ${crimeColors["color"]};">
         <div class='ring1' style="border: 1px solid ${crimeColors["color"]};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
-      };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
-      };  position: absolute;
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
+      crimeColors["color"]
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
+      crimeColors["color"]
+    };  position: absolute;
             top: 50%;
             left: 50%;
             margin-right: -50%;
@@ -88,14 +106,17 @@ const createCustomMarker = (markerData, crimeAge = 2, hoursDifference, cctvId) =
       html: HTMLdata,
     });
   }
-  
+
   const crime = markerData.crime;
 
   const newMarker = L.marker([markerData.lat, markerData.lng], {
     icon,
-    crime
-  }).bindPopup(`<div><h3><strong>Case Number: </strong>${markerData['Case Number']}</h3><br><strong>Crime Type: </strong>${markerData['Primary Type']}<br><strong>Description: </strong>${markerData['Description']}<br><strong>Crime Date and Time: </strong>${markerData['Date']} <h1>Crime Color Name: ${markerData.crime}</h1></div>`)
-    .on('click', function () {
+    crime,
+  })
+    .bindPopup(
+      `<div><h3><strong>Case Number: </strong>${markerData["Case Number"]}</h3><br><strong>Crime Type: </strong>${markerData["Primary Type"]}<br><strong>Description: </strong>${markerData["Description"]}<br><strong>Crime Date and Time: </strong>${markerData["Date"]} <h1>Crime Color Name: ${markerData.crime}</h1></div>`
+    )
+    .on("click", function () {
       activateCCTV(cctvId);
     });
 
@@ -211,35 +232,32 @@ class createMap {
     this.clearMap();
 
     if (boundary.length > 0) {
-      this.boundaries = L.geoJSON(null,{
-        style:function (feature){
-          return{
+      this.boundaries = L.geoJSON(null, {
+        style: function (feature) {
+          return {
             color: "blue",
-            fill:true,
-            opacity: 0.8
+            fill: true,
+            opacity: 0.8,
           };
         },
-        onEachFeature(feature,layer){
-          layer.on('mouseover',function(){
+        onEachFeature(feature, layer) {
+          layer.on("mouseover", function () {
             this.setStyle({
-              'fillColor':"green"
+              fillColor: "green",
             });
             showPoliceStationData(feature);
-          })
-          layer.on('mouseout', function (){
+          });
+          layer.on("mouseout", function () {
             this.setStyle({
-              'fillColor':'blue'
+              fillColor: "blue",
             });
-            
-            sleep(7000).then(()=>
-            clearPoliceStationData()
-            );
-          })
-        }
+
+            sleep(7000).then(() => clearPoliceStationData());
+          });
+        },
       });
       this.boundaries.addData(boundary);
-    }
-    else {
+    } else {
       // if boundary not present then set default bounds
       this.changeView(BOUNDS);
       return;
@@ -257,7 +275,7 @@ class createMap {
           marker,
           crimeAge,
           hoursDifference,
-          '#1234' // cctv id
+          "#1234" // cctv id
         );
       });
 
