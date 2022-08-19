@@ -5,7 +5,7 @@ import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "leaflet.heat";
 import { crimeJSON } from "./data";
 import { activateCCTV } from "./cctv";
-import { clearPoliceStationData, showPoliceStationData } from "./stationHover";
+import { showPoliceStationData } from "./stationHover";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -252,7 +252,6 @@ class createMap {
               fillColor: "blue",
             });
 
-            sleep(7000).then(() => clearPoliceStationData());
           });
         },
       });

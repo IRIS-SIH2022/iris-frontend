@@ -314,15 +314,20 @@
                   </div>
                   <div class="mx-2">
                     <div class="col-span-6 sm:col-span-3">
-                      <select id="crime" name="crime"
-                        class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="all" selected>Choose Time</option>
-                        <option value="murder">00:00 to 01:00</option>
-                        <option value="assault">01:00 to 02:00</option>
-                      </select>
+                      <div class="text-left font-small text-xs text-black dark:text-white">
+                        <label for="startTime">From:</label>
+                      </div>
+                      <input type="datetime-local" id="startTime" name="startTime">
                     </div>
                   </div>
 
+                  <div class="mx-2">
+                    <div class="col-span-6 sm:col-span-3">
+                      <div class="text-left font-small text-xs text-black dark:text-white">
+                        <label for="startTime">To:</label>
+                      </div> <input type="datetime-local" id="endTime" name="endTime">
+                    </div>
+                  </div>
                   <div class="mx-2">
                     <input id="filter-submit-btn" type="submit" value="Apply"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
@@ -330,12 +335,7 @@
                     <!-- </> -->
                   </div>
                 </form>
-                <div class="text-left font-medium text-xs text-black dark:text-white">
-                  <div id="stationData">
-                    Police station data here
-                  </div>
                 </div>
-              </div>
             </div>
           </div>
         </header>
@@ -353,7 +353,45 @@
                     <div class="w-full rounded shadow-sm">
                       <div class="flex items-center justify-between mb-4">
                         <div class="text-left font-bold text-xl text-black dark:text-white">
-                          Analytics
+                          Station Data
+                        <div class="text-left font-medium text-xs text-black dark:text-white">
+                          <div id="stationData">
+                            Police station data here
+                          </div>
+                        </div>
+                      
+                        <!-- <div class="flex space-x-4">
+                          <button class="p-2 rounded-full bg-blue-500 text-white">
+                            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                              <path fill="currentColor"
+                                d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z">
+                              </path>
+                            </svg>
+                          </button>
+                          <button class="p-2 rounded-full bg-blue-500 text-white">
+                            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                              <path fill="currentColor"
+                                d="M10 19a1 1 0 0 1-.64-.23a1 1 0 0 1-.13-1.41L13.71 12L9.39 6.63a1 1 0 0 1 .15-1.41a1 1 0 0 1 1.46.15l4.83 6a1 1 0 0 1 0 1.27l-5 6A1 1 0 0 1 10 19z">
+                              </path>
+                            </svg>
+                          </button>
+                        </div> -->
+                      </div>
+                      <!-- <button id="prevGraphButton" style="padding: 5px; margin:10;">&#8249</button>
+                      <button id="nextGraphButton" style="padding: 5px; margin:10;">&#8250</button>
+                      <canvas id="chartArea"></canvas> -->
+                    </div>
+
+                      <div class="-mx-2"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="shadow-lg rounded-2xl p-4 my-4 bg-white dark:bg-gray-700">
+                  <div class="flex flex-wrap overflow-hidden">
+                    <div class="w-full rounded shadow-sm">
+                      <div class="flex items-center justify-between mb-4">
+                        <div class="text-left font-bold text-xl text-black dark:text-white">
+                          CCTV camera
                         </div>
 
                         <!-- <div class="flex space-x-4">
@@ -373,20 +411,19 @@
                           </button>
                         </div> -->
                       </div>
-                      <button id="prevGraphButton" style="padding: 5px; margin:10;">&#8249</button>
-                      <button id="nextGraphButton" style="padding: 5px; margin:10;">&#8250</button>
-                      <canvas id="chartArea"></canvas>
+                      <div id="cctvArea"></div>
 
                       <div class="-mx-2"></div>
                     </div>
                   </div>
                 </div>
+
                 <div class="shadow-lg rounded-2xl p-4 my-4 bg-white dark:bg-gray-700">
                   <div class="flex flex-wrap overflow-hidden">
                     <div class="w-full rounded shadow-sm">
                       <div class="flex items-center justify-between mb-4">
                         <div class="text-left font-bold text-xl text-black dark:text-white">
-                          CCTV camera
+                          Live Crime Notification
                         </div>
 
                         <!-- <div class="flex space-x-4">

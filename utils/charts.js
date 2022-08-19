@@ -9,10 +9,10 @@ const jsonData = {
 
 const numberOfGraphs = 3;
 
-document.addEventListener("DOMContentLoaded", function (event) {
-  document.getElementById('nextGraphButton').onclick = nextGraph;
-  document.getElementById('prevGraphButton').onclick = prevGraph;
-});
+// document.addEventListener("DOMContentLoaded", function (event) {
+//   document.getElementById('nextGraphButton').onclick = nextGraph;
+//   document.getElementById('prevGraphButton').onclick = prevGraph;
+// });
 
 function makeDoughnutChart(jsonData) {
 
@@ -158,11 +158,11 @@ function shuffleChart() {
 }
 // switch the graphs if no particular graph is selected
 
-  if (flag == 1) {
-    setTimeout(() => {
-      nextGraph();
-    }, 7000)
-  }
+  // if (flag == 1) {
+  //   setTimeout(() => {
+  //     nextGraph();
+  //   }, 7000)
+  // }
 
 function makeGraph() {
   switch (position) {
@@ -181,5 +181,5 @@ function makeGraph() {
 }
 
 
-const testChartData = { 'January': 200, 'Februrary': 300, 'March': 260, 'April': 800 }
-makeLineChart(testChartData)
+// const testChartData = { 'January': 200, 'Februrary': 300, 'March': 260, 'April': 800 }
+// makeLineChart(testChartData)

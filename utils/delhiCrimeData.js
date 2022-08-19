@@ -1,6 +1,23 @@
 export const delhiCrimeDataset = 
   [
     {
+      "Case Number": "HV198224",
+      "Date": "2012-03-14T07:00:00.000Z",
+      "Time": "1899-12-31T05:50:00.000Z",
+      "Primary Type": "DRUG SMUGGLING, POSSESION, SALE OR USE OF DRUGS",
+      "Description": "PROHIBITION ACT (STATE)",
+      "lng": 77.0141022,
+      "lat": 28.49921296,
+      "Police Districts": 9,
+      "time": 1660668486,
+      "crime": "Theft",
+      "Police Station": null,
+      "ACT": null,
+      "min lng": 28.47306762,
+      "max lat": 28.65564182,
+      "concentrated lat": null
+    },
+    {
      "Case Number": "HV198224",
      "Date": "2012-03-14T07:00:00.000Z",
      "Time": "1899-12-31T05:50:00.000Z",
@@ -26,7 +43,7 @@ export const delhiCrimeDataset =
      "lng": 76.90180873,
      "lat": 28.53219896,
      "Police Districts": 18,
-     "time": 1335312000,
+     "time": 1660754668,
      "crime": "Assault",
      "Police Station": null,
      "ACT": null,
@@ -298,8 +315,8 @@ export const delhiCrimeDataset =
      "lng": 76.95366695,
      "lat": 28.62266202,
      "Police Districts": 5,
-     "time": 1331164800,
-     "crime": "Assault",
+     "time": 1660754668,
+     "crime": "Murder",
      "Police Station": null,
      "ACT": null,
      "min lng": null,
