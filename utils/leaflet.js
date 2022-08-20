@@ -6,11 +6,11 @@ import "leaflet.heat";
 import { crimeJSON } from "./data";
 import { activateCCTV } from "./cctv";
 import { showPoliceStationData } from "./stationHover";
+import { assignColor, stationDetails } from "./coloredStations";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
 const DEFAULT_LOCATION = [22.629799, 80.212343];
 const DEFAULT_ZOOM = 5;
 const BOUNDS = new L.latLngBounds(
@@ -70,11 +70,9 @@ const createCustomMarker = (
   cctvId
 ) => {
   const crimeColors = crimeJSON[markerData.crime];
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
-    crimeColors["color"]
-  };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
-    crimeColors["color"]
-  };"></div>`;
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
+    };"></div>`;
 
   let icon = L.divIcon({
     className: "custom-div-icon",
@@ -83,16 +81,13 @@ const createCustomMarker = (
 
   //rings around latest crimes
   if (hoursDifference <= 44) {
-    HTMLdata = `<div class='ring3' style="border: 1px solid ${
-      crimeColors["color"]
-    };">
+    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors["color"]
+      };">
       <div class='ring2' style="border: 1px solid ${crimeColors["color"]};">
         <div class='ring1' style="border: 1px solid ${crimeColors["color"]};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${
-      crimeColors["color"]
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${
-      crimeColors["color"]
-    };  position: absolute;
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
+      };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
+      };  position: absolute;
             top: 50%;
             left: 50%;
             margin-right: -50%;
@@ -228,34 +223,68 @@ class createMap {
     }
   }
 
-  applyFilter(boundary, markers) {
+  applyFilter(boundary, markers, toggle) {
     this.clearMap();
 
     if (boundary.length > 0) {
-      this.boundaries = L.geoJSON(null, {
-        style: function (feature) {
-          return {
-            color: "blue",
-            fill: true,
-            opacity: 0.8,
-          };
-        },
-        onEachFeature(feature, layer) {
-          layer.on("mouseover", function () {
-            this.setStyle({
-              fillColor: "green",
+      if (toggle) {
+        this.boundaries = L.geoJSON(null, {
+          style: function (feature) {
+            return {
+              color:assignColor(stationDetails[feature.stationID]) ,
+              fill: true,
+              opacity: 0.8,
+            };
+          },
+          onEachFeature(feature, layer) {
+            const currentColor = assignColor(stationDetails[feature.stationID]);
+            layer.on("mouseover", function () {
+              this.setStyle({
+                fillColor: "grey",
+                fill: true,
+                opacity: 0.5
+              });
+              showPoliceStationData(feature);
             });
-            showPoliceStationData(feature);
-          });
-          layer.on("mouseout", function () {
-            this.setStyle({
-              fillColor: "blue",
-            });
+            layer.on("mouseout", function () {
+              this.setStyle({
+                fillColor: currentColor,
+              });
 
-          });
-        },
-      });
-      this.boundaries.addData(boundary);
+            });
+          },
+        });
+        this.boundaries.addData(boundary);
+           }
+      else {
+
+        this.boundaries = L.geoJSON(null, {
+          style: function (feature) {
+            return {
+              color: "blue",
+              fill: true,
+              opacity: 0.8,
+            };
+          },
+          onEachFeature(feature, layer) {
+            layer.on("mouseover", function () {
+              this.setStyle({
+                fillColor: "green",
+                fill: true,
+                opacity: 0.5
+              });
+              showPoliceStationData(feature);
+            });
+            layer.on("mouseout", function () {
+              this.setStyle({
+                fillColor: "blue",
+              });
+
+            });
+          },
+        });
+        this.boundaries.addData(boundary);
+      }
     } else {
       // if boundary not present then set default bounds
       this.changeView(BOUNDS);
@@ -292,5 +321,6 @@ class createMap {
     this.changeView(this.boundaries.getBounds());
   }
 }
+
 
 export default createMap;

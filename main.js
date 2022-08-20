@@ -54,3 +54,26 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
     map.applyFilter([], []);
   }
 });
+
+
+function switchColor() {
+  if (toggle) {
+    toggle=0;
+    map.applyFilter(geoJSONLayer,delhiCrimeDataset,toggle)
+  }
+  else {
+    toggle=1
+    map.applyFilter(geoJSONLayer,delhiCrimeDataset,toggle)
+  }
+
+}
+
+let toggle=0;
+
+function colorStation() {
+  const element = document.getElementById('stationColorToggle');
+  element.onclick = switchColor;
+}
+
+colorStation();
+
