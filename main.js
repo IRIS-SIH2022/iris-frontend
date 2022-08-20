@@ -9,6 +9,7 @@ import { delhiCrimeDataset } from "./utils/delhiCrimeData";
 // |
 // |
 // ---- uncomment this for the ditrict-wise visualization
+let toggle=0;
 
 let map = new createMap();
 
@@ -45,11 +46,11 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
 
   // temp code to check functionality
   if (cctns === "" && block === "all" && crime === "all") {
-    map.applyFilter(geoJSONLayer, delhiCrimeDataset);
+    map.applyFilter(geoJSONLayer, delhiCrimeDataset,toggle);
   } else if (cctns === "" && block === "all" && crime !== "all") {
-    map.applyFilter(geoJSONLayer, markerFilter);
+    map.applyFilter(geoJSONLayer, markerFilte,toggler);
   } else if (cctns === "" && block !== "all" && crime === "all") {
-    map.applyFilter(mapFilter, markerFilter);
+    map.applyFilter(mapFilter, markerFilter,toggle);
   } else if (cctns === "" && block !== "all" && crime !== "all") {
     map.applyFilter([], []);
   }
@@ -67,8 +68,6 @@ function switchColor() {
   }
 
 }
-
-let toggle=0;
 
 function colorStation() {
   const element = document.getElementById('stationColorToggle');
