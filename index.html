@@ -285,7 +285,7 @@
                       </svg>
                       <input
                         id="cctns"
-                        name="cctns"
+                        name="case_number"
                         type="text"
                         class="block w-full py-1.5 pl-10 pr-4 leading-normal rounded-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 bg-gray-100 dark:bg-gray-800 text-gray-400 aa-input"
                         placeholder="Search CCTNS"
@@ -316,10 +316,10 @@
                       > -->
                         <select
                           id="block"
-                          name="block"
+                          name="StationID"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          <option value="all" selected>Choose Block</option>
+                          <option value="" selected>Choose Block</option>
                         </select>
                       </div>
                     </div>
@@ -327,10 +327,10 @@
                       <div class="col-span-6 sm:col-span-3">
                         <select
                           id="act"
-                          name="act"
+                          name="act_type"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          <option value="all" selected>Choose Act</option>
+                          <option value="" selected>Choose Act</option>
                           <option value="Drug">IPC</option>
                           <option value="Weapon">NDPS</option>
                         </select>
@@ -340,10 +340,10 @@
                       <div class="col-span-6 sm:col-span-3">
                         <select
                           id="crime"
-                          name="crime"
+                          name="primary_type"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          <option value="all" selected>Choose Crime</option>
+                          <option value="" selected>Choose Crime</option>
                           <option value="murder">Murder</option>
                           <option value="assault">Assault</option>
                         </select>
@@ -368,9 +368,25 @@
                     <div class="mx-2">
                       <div class="col-span-6 sm:col-span-3">
                         <input
+                          id="daterange"
+                          name="daterange"
+                          type="text"
+                          placeholder="Select date range"
+                          value=""
+                          autocomplete="off"
+                          class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                    </div>
+                    <div class="mx-2">
+                      <div class="col-span-6 sm:col-span-3">
+                        <input
                           id="timerange"
                           name="timerange"
                           type="text"
+                          autocomplete="off"
+                          placeholder="Select time range"
+                          value=""
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
                       </div>
@@ -573,13 +589,43 @@
     />
     <script>
       $(function () {
-        $('input[name="timerange"]').daterangepicker({
-          timePicker: true,
-          timePicker24Hour: true,
-          locale: {
-            format: "DD/MM/YYYY HH:mm",
+        $('input[name="daterange"]').daterangepicker(
+          {
+            opens: "left",
+            autoApply: true,
+            autoUpdateInput: false,
+            locale: {
+              format: "DD/MM/YYYY",
+            },
           },
-        });
+          function (start, end, label) {
+            $("#daterange").val(
+              start.format("DD/MM/YYYY") + " - " + end.format("DD/MM/YYYY")
+            );
+          }
+        );
+      });
+
+      $(function () {
+        $('input[name="timerange"]')
+          .daterangepicker(
+            {
+              timePicker: true,
+              timePicker24Hour: true,
+              autoUpdateInput: false,
+              locale: {
+                format: "HH:mm",
+              },
+            },
+            function (start, end, label) {
+              $("#timerange").val(
+                start.format("HH:mm") + " - " + end.format("HH:mm")
+              );
+            }
+          )
+          .on("show.daterangepicker", function (ev, picker) {
+            picker.container.find(".calendar-table").hide();
+          });
       });
     </script>
   </body>
