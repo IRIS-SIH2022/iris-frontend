@@ -1,11 +1,11 @@
 import "./style.css";
 import createMap from "./utils/leaflet";
 
-import { geoJSONLayer, mapFilter, markerFilter } from "./utils/data";
+// import { geoJSONLayer, mapFilter, markerFilter } from "./utils/data";
 
-import { delhiCrimeDataset } from "./utils/finalData";
+// import { delhiCrimeDataset } from "./utils/finalData";
 
-console.log(delhiCrimeDataset.length)
+// console.log(delhiCrimeDataset.length)
 
 // import { allIndia } from "./utils/data.js";
 // |
@@ -17,18 +17,18 @@ let toggle = 0;
 let map = new createMap();
 
 // render blocks from geoJSONLayer
-const blocks = geoJSONLayer
-  .map((item) => {
-    const opt = document.createElement("option");
-    opt.value = item.name;
-    opt.innerText = item.name;
-    return opt;
-  })
-  .sort((a, b) => a.value.localeCompare(b.value));
+// const blocks = geoJSONLayer
+//   .map((item) => {
+//     const opt = document.createElement("option");
+//     opt.value = item.name;
+//     opt.innerText = item.name;
+//     return opt;
+//   })
+//   .sort((a, b) => a.value.localeCompare(b.value));
 
-blocks.forEach((item) => {
-  document.getElementById("block").appendChild(item);
-});
+// blocks.forEach((item) => {
+//   document.getElementById("block").appendChild(item);
+// });
 
 document.getElementById("filter-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -41,37 +41,35 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
   // get geoJSON of markers and boundaries
   // apply filter to map
 
-  // const request = await fetch(
-  //   `/api/v1/filter?cctns=${cctns}&block=${block}&crime=${crime}&act=${act}`
-  // );
-  // const data = await request.json();
-  // map.applyFilter(data.boundaryData, data.markerData);
+  const requestBound = await fetch(`http://127.0.0.1:8000/station/${StationID}`);
 
-  // temp code to check functionality
-  if (case_number === "" && StationID === "" && primary_type === "") {
-    map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
-  } else if (cctns === "" && block === "all" && crime !== "all") {
-    map.applyFilter(geoJSONLayer, markerFilte, toggler);
-  } else if (cctns === "" && block !== "all" && crime === "all") {
-    map.applyFilter(mapFilter, markerFilter, toggle);
-  } else if (cctns === "" && block !== "all" && crime !== "all") {
-    map.applyFilter([], []);
-  }
+  const boundaryData = await requestBound.json();
+
+  const requestMarker = await fetch("http://127.0.0.1:8000/marker/request", { 
+    method: "POST",
+    body: JSON.stringify(formProps), 
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const markerData = await requestMarker.json();
+  
+  map.applyFilter(boundaryData, markerData, toggle);
 });
 
-function switchColor() {
-  if (toggle) {
-    toggle = 0;
-    map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
-  } else {
-    toggle = 1;
-    map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
-  }
-}
+// function switchColor() {
+//   if (toggle) {
+//     toggle = 0;
+//     map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
+//   } else {
+//     toggle = 1;
+//     map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
+//   }
+// }
 
-function colorStation() {
-  const element = document.getElementById("stationColorToggle");
-  element.onclick = switchColor;
-}
+// function colorStation() {
+//   const element = document.getElementById("stationColorToggle");
+//   element.onclick = switchColor;
+// }
 
 // colorStation();
