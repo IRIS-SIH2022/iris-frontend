@@ -9,7 +9,8 @@ import { delhiCrimeDataset } from "./utils/delhiCrimeData";
 // |
 // |
 // ---- uncomment this for the ditrict-wise visualization
-let toggle=0;
+
+let toggle = 0;
 
 let map = new createMap();
 
@@ -46,33 +47,29 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
 
   // temp code to check functionality
   if (cctns === "" && block === "all" && crime === "all") {
-    map.applyFilter(geoJSONLayer, delhiCrimeDataset,toggle);
+    map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
   } else if (cctns === "" && block === "all" && crime !== "all") {
-    map.applyFilter(geoJSONLayer, markerFilte,toggler);
+    map.applyFilter(geoJSONLayer, markerFilte, toggler);
   } else if (cctns === "" && block !== "all" && crime === "all") {
-    map.applyFilter(mapFilter, markerFilter,toggle);
+    map.applyFilter(mapFilter, markerFilter, toggle);
   } else if (cctns === "" && block !== "all" && crime !== "all") {
     map.applyFilter([], []);
   }
 });
 
-
 function switchColor() {
   if (toggle) {
-    toggle=0;
-    map.applyFilter(geoJSONLayer,delhiCrimeDataset,toggle)
+    toggle = 0;
+    map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
+  } else {
+    toggle = 1;
+    map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
   }
-  else {
-    toggle=1
-    map.applyFilter(geoJSONLayer,delhiCrimeDataset,toggle)
-  }
-
 }
 
 function colorStation() {
-  const element = document.getElementById('stationColorToggle');
+  const element = document.getElementById("stationColorToggle");
   element.onclick = switchColor;
 }
 
 colorStation();
-
