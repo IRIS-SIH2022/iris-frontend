@@ -69,9 +69,9 @@ const createCustomMarker = (
   hoursDifference,
   cctvId
 ) => {
-  const crimeColors = crimeJSON[markerData.crime];
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
+  const crimeColors = 'red';
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${'red'
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${'red'
     };"></div>`;
 
   let icon = L.divIcon({
@@ -135,7 +135,7 @@ class createMap {
     this.layerControl = L.control.layers(baseMaps).addTo(this.map);
 
     // add marker layer
-    this.markerLayer = L.featureGroup().addTo(this.map);
+    this.markerLayer = L.featureGroup();
     this.layerControl.addOverlay(this.markerLayer, "Markers");
     // add boundaries layer
     this.boundariesLayer = L.featureGroup().addTo(this.map);
@@ -225,7 +225,7 @@ class createMap {
 
   applyFilter(boundary, markers, toggle) {
     this.clearMap();
-
+console.log(markers.length);
     if (boundary.length > 0) {
       if (toggle) {
         this.boundaries = L.geoJSON(null, {
@@ -311,7 +311,8 @@ class createMap {
       let tmp = [];
       tmp.push(item["lat"]);
       tmp.push(item["lng"]);
-      tmp.push(crimeJSON[item["crime"]]["intensity"]);
+      tmp.push(70);
+      // tmp.push(crimeJSON[item["primary_type"]]["intensity"]);
       return tmp;
     });
 

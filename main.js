@@ -3,7 +3,9 @@ import createMap from "./utils/leaflet";
 
 import { geoJSONLayer, mapFilter, markerFilter } from "./utils/data";
 
-import { delhiCrimeDataset } from "./utils/delhiCrimeData";
+import { delhiCrimeDataset } from "./utils/finalData";
+
+console.log(delhiCrimeDataset.length)
 
 // import { allIndia } from "./utils/data.js";
 // |
@@ -32,7 +34,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
-  const { cctns, block, crime, act } = formProps;
+  const {case_number, StationID, act_type, primary_type, daterange, timerange } = formProps;
   console.log(formProps);
 
   // make request to backend
@@ -46,7 +48,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
   // map.applyFilter(data.boundaryData, data.markerData);
 
   // temp code to check functionality
-  if (cctns === "" && block === "all" && crime === "all") {
+  if (case_number === "" && StationID === "" && primary_type === "") {
     map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
   } else if (cctns === "" && block === "all" && crime !== "all") {
     map.applyFilter(geoJSONLayer, markerFilte, toggler);
@@ -72,4 +74,4 @@ function colorStation() {
   element.onclick = switchColor;
 }
 
-colorStation();
+// colorStation();
