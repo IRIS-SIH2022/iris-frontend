@@ -315,37 +315,33 @@
                         >Country</label
                       > -->
                         <select
-                          id="block"
+                          id="stations"
                           name="StationID"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
-                          <option value="12" selected>Choose Block</option>
+                          <option value="-1" selected>Choose Block</option>
                         </select>
                       </div>
                     </div>
                     <div class="mx-2">
                       <div class="col-span-6 sm:col-span-3">
                         <select
-                          id="act"
+                          id="acts"
                           name="act_type"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
                           <option value="" selected>Choose Act</option>
-                          <option value="Drug">IPC</option>
-                          <option value="Weapon">NDPS</option>
                         </select>
                       </div>
                     </div>
                     <div class="mx-2">
                       <div class="col-span-6 sm:col-span-3">
                         <select
-                          id="crime"
+                          id="primaryTypes"
                           name="primary_type"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
                           <option value="" selected>Choose Crime</option>
-                          <option value="murder">Murder</option>
-                          <option value="assault">Assault</option>
                         </select>
                       </div>
                     </div>
@@ -569,6 +565,7 @@
 
     <script type="module" src="/main.js"></script>
     <script type="module" src="/utils/charts.js"></script>
+    <script type="module" src="/utils/dropdownData.js"></script>
     <!-- <script type="module" src="/utils/coloredStations.js"></script> -->
     <script
       type="text/javascript"
