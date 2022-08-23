@@ -311,19 +311,25 @@
                               <div id="stationData">
                                 Police station data here
                               </div>
-                                <div class="mx-2">
-                    <div class="col-span-6 sm:col-span-3">
-                      <label
-                        for="country"
-                        class="block text-sm font-medium text-white"
-                        >Enable Station Colors</label
-                      >
-                      <label class="switch" style="margin-left: 30px">
-                        <input id="stationColorToggle" type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </div>
-                 </div>
+                              <div class="mx-2">
+                                <div class="col-span-6 sm:col-span-3">
+                                  <label
+                                    for="country"
+                                    class="block text-sm font-medium text-white"
+                                    >Enable Station Colors</label
+                                  >
+                                  <label
+                                    class="switch"
+                                    style="margin-left: 30px"
+                                  >
+                                    <input
+                                      id="stationColorToggle"
+                                      type="checkbox"
+                                    />
+                                    <span class="slider round"></span>
+                                  </label>
+                                </div>
+                              </div>
                             </div>
 
                             <!-- <div class="flex space-x-4">
@@ -455,41 +461,25 @@
     />
     <script>
       $(function () {
-        $('input[name="daterange"]').daterangepicker(
-          {
-            opens: "left",
-            autoApply: true,
-            autoUpdateInput: false,
-            locale: {
-              format: "DD/MM/YYYY",
-            },
+        $('input[name="daterange"]').daterangepicker({
+          opens: "left",
+          autoApply: true,
+          locale: {
+            format: "DD/MM/YYYY",
           },
-          function (start, end, label) {
-            $("#daterange").val(
-              start.format("DD/MM/YYYY") + " - " + end.format("DD/MM/YYYY")
-            );
-          }
-        );
+        });
       });
 
       $(function () {
         $('input[name="timerange"]')
-          .daterangepicker(
-            {
-              timePicker: true,
-              timePicker24Hour: true,
-              autoUpdateInput: false,
-              opens: "left",
-              locale: {
-                format: "HH:mm",
-              },
+          .daterangepicker({
+            timePicker: true,
+            timePicker24Hour: true,
+            opens: "left",
+            locale: {
+              format: "HH:mm",
             },
-            function (start, end, label) {
-              $("#timerange").val(
-                start.format("HH:mm") + " - " + end.format("HH:mm")
-              );
-            }
-          )
+          })
           .on("show.daterangepicker", function (ev, picker) {
             picker.container.find(".calendar-table").hide();
           });
