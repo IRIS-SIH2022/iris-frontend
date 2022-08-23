@@ -7,7 +7,7 @@ import { crimeJSON } from "./data";
 import { activateCCTV } from "./cctv";
 import { showPoliceStationData } from "./stationHover";
 import { assignColor, stationDetails } from "./coloredStations";
-import { markerColors } from "./markerColoring";
+import { intensities, markerColors } from "./markerColoring";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -311,8 +311,7 @@ console.log(markers.length);
       let tmp = [];
       tmp.push(item["lat"]);
       tmp.push(item["lng"]);
-      tmp.push(70);
-      // tmp.push(crimeJSON[item["primary_type"]]["intensity"]);
+      tmp.push(intensities[item['primary_type']])
       return tmp;
     });
 
