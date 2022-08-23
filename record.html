@@ -312,40 +312,29 @@
     />
     <script>
       $(function () {
-        $('input[name="date"]').daterangepicker(
-          {
-            opens: "right",
-            drops: "up",
-            singleDatePicker: true,
-            autoApply: true,
-            autoUpdateInput: false,
-            locale: {
-              format: "DD/MM/YYYY",
-            },
+        $('input[name="date"]').daterangepicker({
+          opens: "right",
+          drops: "up",
+          singleDatePicker: true,
+          autoApply: true,
+          locale: {
+            format: "DD/MM/YYYY",
           },
-          function (start, end, label) {
-            $("#date").val(start.format("DD/MM/YYYY"));
-          }
-        );
+        });
       });
 
       $(function () {
         $('input[name="time"]')
-          .daterangepicker(
-            {
-              timePicker: true,
-              timePicker24Hour: true,
-              singleDatePicker: true,
-              autoUpdateInput: false,
-              opens: "right",
-              locale: {
-                format: "HH:mm",
-              },
+          .daterangepicker({
+            timePicker: true,
+            timePicker24Hour: true,
+            singleDatePicker: true,
+            startDate: moment(),
+            opens: "right",
+            locale: {
+              format: "HH:mm",
             },
-            function (start, end, label) {
-              $("#time").val(start.format("HH:mm"));
-            }
-          )
+          })
           .on("show.daterangepicker", function (ev, picker) {
             picker.container.find(".calendar-table").hide();
           });
