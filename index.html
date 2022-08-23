@@ -461,25 +461,41 @@
     />
     <script>
       $(function () {
-        $('input[name="daterange"]').daterangepicker({
-          opens: "left",
-          autoApply: true,
-          locale: {
-            format: "DD/MM/YYYY",
+        $('input[name="daterange"]').daterangepicker(
+          {
+            opens: "left",
+            autoApply: true,
+            autoUpdateInput: false,
+            locale: {
+              format: "DD/MM/YYYY",
+            },
           },
-        });
+          function (start, end, label) {
+            $("#daterange").val(
+              start.format("DD/MM/YYYY") + " - " + end.format("DD/MM/YYYY")
+            );
+          }
+        );
       });
 
       $(function () {
         $('input[name="timerange"]')
-          .daterangepicker({
-            timePicker: true,
-            timePicker24Hour: true,
-            opens: "left",
-            locale: {
-              format: "HH:mm",
+          .daterangepicker(
+            {
+              timePicker: true,
+              timePicker24Hour: true,
+              autoUpdateInput: false,
+              opens: "left",
+              locale: {
+                format: "HH:mm",
+              },
             },
-          })
+            function (start, end, label) {
+              $("#timerange").val(
+                start.format("HH:mm") + " - " + end.format("HH:mm")
+              );
+            }
+          )
           .on("show.daterangepicker", function (ev, picker) {
             picker.container.find(".calendar-table").hide();
           });
