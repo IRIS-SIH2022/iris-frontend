@@ -106,8 +106,6 @@ function addStationsDropdown(stations) {
   let element = document.getElementById('stations');
 
   for (let i=0;i< stations.length;i++) {
-    // console.log(Object.keys(stations[i])[0])
-    // console.log(Object.values(stations[i])[0])
     let option = document.createElement("option");
     option.value = Object.values(stations[i])[0];
     option.text = Object.keys(stations[i])[0];

@@ -1,36 +1,48 @@
 export const assignColor = (crimes) => {
-  if (crimes > 15000) {
+  if (crimes > totalCrimes*0.3) {
     return 'red';
   }
-  if (crimes > 8000) { return 'orange'; }
-  if (crimes > 5000) { return 'yellow' }
-  if (crimes > 2000) { return '#90ee90' }
+  if (crimes > totalCrimes*0.25) { return 'orange'; }
+  if (crimes > totalCrimes*0.2) { return 'yellow' }
+  if (crimes > totalCrimes*0.1) { return '#90ee90' }
   return 'green';
 }
 
+let totalCrimes = 0;
+
 export const stationDetails = {
-  1: 1000,
-  2: 3000,
-  3: 11000,
-  4: 7000,
-  5: 14000,
-  6: 21000,
-  7: 31000,
-  8: 11000,
-  9: 8000,
-  10: 7000,
-  11: 6000,
-  12: 5000,
-  13: 4000,
-  14: 2000,
-  15: 3000,
-  16: 100,
-  17: 9000,
-  18: 11000,
-  19: 13000,
-  20: 16000,
-  21: 17000,
-  22: 1000,
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 0,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0,
+  13: 0,
+  14: 0,
+  15: 0,
+  16: 0,
+  17: 0,
+  18: 0,
+  19: 0,
+  20: 0,
+  21: 0,
+  22: 0
+}
+
+export const getPoliceStationWiseCrimes = (markersData) => {
+
+  for (let i = 0; i < markersData.length; i++) {
+    stationDetails[markersData[i]['StationID']]++;
+    totalCrimes++;
+  }
+
+  // console.log(stationDetails)
 }
 
 // All this implemented in main.js

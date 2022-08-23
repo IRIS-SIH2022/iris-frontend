@@ -7,6 +7,7 @@ import { crimeJSON } from "./data";
 import { activateCCTV } from "./cctv";
 import { showPoliceStationData } from "./stationHover";
 import { assignColor, stationDetails } from "./coloredStations";
+import { markerColors } from "./markerColoring";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -69,9 +70,9 @@ const createCustomMarker = (
   hoursDifference,
   cctvId
 ) => {
-  const crimeColors = 'red';
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${'red'
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${'red'
+  const crimeColors = markerColors[markerData['primary_type']];
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors
+    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors
     };"></div>`;
 
   let icon = L.divIcon({
@@ -81,12 +82,12 @@ const createCustomMarker = (
 
   //rings around latest crimes
   if (hoursDifference <= 44) {
-    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors["color"]
+    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors
       };">
-      <div class='ring2' style="border: 1px solid ${crimeColors["color"]};">
-        <div class='ring1' style="border: 1px solid ${crimeColors["color"]};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors["color"]
-      };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors["color"]
+      <div class='ring2' style="border: 1px solid ${crimeColors};">
+        <div class='ring1' style="border: 1px solid ${crimeColors};">
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors
+      };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors
       };  position: absolute;
             top: 50%;
             left: 50%;
@@ -103,13 +104,12 @@ const createCustomMarker = (
   }
 
   const crime = markerData.crime;
-
   const newMarker = L.marker([markerData.lat, markerData.lng], {
     icon,
     crime,
   })
     .bindPopup(
-      `<div><h3><strong>Case Number: </strong>${markerData["Case Number"]}</h3><br><strong>Crime Type: </strong>${markerData["Primary Type"]}<br><strong>Description: </strong>${markerData["Description"]}<br><strong>Crime Date and Time: </strong>${markerData["Date"]} <h1>Crime Color Name: ${markerData.crime}</h1></div>`
+      `<div><h3><strong>Case Number: </strong>${markerData["case_number"]}</h3><br><strong>Crime Type (Primary Type): </strong>${markerData["primary_type"]}<br><strong>Description: </strong>${markerData["description"]}<br><strong>Crime Date and Time: </strong>${markerData["date"]} and ${markerData['time']}</div>`
     )
     .on("click", function () {
       activateCCTV(cctvId);
@@ -231,13 +231,13 @@ console.log(markers.length);
         this.boundaries = L.geoJSON(null, {
           style: function (feature) {
             return {
-              color:assignColor(stationDetails[feature.stationID]) ,
+              color:assignColor(stationDetails[feature.StationID]) ,
               fill: true,
               opacity: 0.8,
             };
           },
           onEachFeature(feature, layer) {
-            const currentColor = assignColor(stationDetails[feature.stationID]);
+            const currentColor = assignColor(stationDetails[feature.StationID]);
             layer.on("mouseover", function () {
               this.setStyle({
                 fillColor: "grey",

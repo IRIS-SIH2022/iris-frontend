@@ -1,4 +1,5 @@
 import "./style.css";
+import { getPoliceStationWiseCrimes } from "./utils/coloredStations";
 import createMap from "./utils/leaflet";
 
 // import { geoJSONLayer, mapFilter, markerFilter } from "./utils/data";
@@ -13,6 +14,8 @@ import createMap from "./utils/leaflet";
 // ---- uncomment this for the ditrict-wise visualization
 
 let toggle = 0;
+let boundaryData;
+let markerData;
 
 let map = new createMap();
 
@@ -43,7 +46,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
 
   const requestBound = await fetch(`http://127.0.0.1:8000/station/${StationID}`);
 
-  const boundaryData = await requestBound.json();
+  boundaryData = await requestBound.json();
 
   const requestMarker = await fetch("http://127.0.0.1:8000/marker/request", { 
     method: "POST",
@@ -52,24 +55,25 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
       'Content-Type': 'application/json'
     }
   });
-  const markerData = await requestMarker.json();
-  
+  markerData = await requestMarker.json();
+  getPoliceStationWiseCrimes(markerData);
+
   map.applyFilter(boundaryData, markerData, toggle);
 });
 
-// function switchColor() {
-//   if (toggle) {
-//     toggle = 0;
-//     map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
-//   } else {
-//     toggle = 1;
-//     map.applyFilter(geoJSONLayer, delhiCrimeDataset, toggle);
-//   }
-// }
+function switchColor() {
+  if (toggle) {
+    toggle = 0;
+    map.applyFilter(boundaryData, markerData, toggle);
+  } else {
+    toggle = 1;
+    map.applyFilter(boundaryData, markerData, toggle);
+  }
+}
 
-// function colorStation() {
-//   const element = document.getElementById("stationColorToggle");
-//   element.onclick = switchColor;
-// }
+function colorStation() {
+  const element = document.getElementById("stationColorToggle");
+  element.onclick = switchColor;
+}
 
-// colorStation();
+colorStation();

@@ -2,7 +2,6 @@ import { stationDetails } from "./coloredStations";
 
 export function showPoliceStationData(feature){
   //get area somehow and show that to add brownie points
-  // console.log(feature.name, feature.stationID)
   document.getElementById('stationData').innerHTML = `
   <table style="width:100%; padding:10px; margin:10px">
   <tr>
@@ -19,15 +18,15 @@ export function showPoliceStationData(feature){
   </tr>
   <tr>
   <td>Police Station Id</td>
-  <td>${feature.stationID}</td>
+  <td>${feature.StationID}</td>
   </tr>
   <tr>
-  <td>Station Incharge</td>
-  <td>Sub Inspector Ms. ABC</td>
+  <td>SHO</td>
+  <td>${feature.sho}</td>
   </tr>
   <tr>
   <td>Total Crimes</td>
-  <td>${stationDetails[feature.stationID]}</td>
+  <td>${stationDetails[feature.StationID]}</td>
   </tr>
   
   </table>
