@@ -80,6 +80,7 @@ const createCustomMarker = (
     html: HTMLdata,
   });
 
+  console.log('--')
   //rings around latest crimes
   if (hoursDifference <= 44) {
     HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors
@@ -293,7 +294,9 @@ console.log(markers.length);
 
     if (markers.length > 0)
       this.markers = markers.map((marker) => {
-        let difference = Date.now() - marker.time * 1000;
+        const crimeTime = marker.date + marker.time/100*60*60
+        // console.log(crimeTime*1000, Date.now());
+        let difference = Date.now() - crimeTime*1000 ;
         let hoursDifference = Math.floor(difference / 1000 / 60 / 60);
         let crimeAge;
         if (hoursDifference <= 1) crimeAge = 3;
