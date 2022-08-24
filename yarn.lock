@@ -616,6 +616,13 @@
   "resolved" "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz"
   "version" "7.0.0"
 
+"leaflet-legend@^1.0.2":
+  "integrity" "sha512-TpGq6itJcrnJ/+ogZgvzn47u1/cgOeOrqxSWA0vQDjJKKJVhbWHy7+ZFQfhZlrrLygGswIfIqE8Z9juDUi2YlA=="
+  "resolved" "https://registry.npmjs.org/leaflet-legend/-/leaflet-legend-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "leaflet" "^0.7.7"
+
 "leaflet-maskcanvas@^1.0.0":
   "integrity" "sha512-uADKXRd3NlTcvh9cX2J5YSRcuCgJjJpjKXgU+gaXjTX0De6gLxSZrK0kEzsRCOguC6VvVViXETQKCM+ArdecvA=="
   "resolved" "https://registry.npmjs.org/leaflet-maskcanvas/-/leaflet-maskcanvas-1.0.0.tgz"
@@ -625,6 +632,11 @@
   "integrity" "sha512-Cd5PbAA/rX3X3XKxfDoUGi9qp78FyhWYurFg3nsfhntcM/MCNK08pRkf4iEenO1KNqwVPKCmkyktjW3UD+h9bQ=="
   "resolved" "https://registry.npmjs.org/leaflet.heat/-/leaflet.heat-0.2.0.tgz"
   "version" "0.2.0"
+
+"leaflet@^0.7.7":
+  "integrity" "sha512-H1lR7J5VxhvQJQHlW2UywtxO63zilLrnwVsDvjKeyfntffj63Ml94gCk9YPYWBkiQgxisdiA8aJ30Zoou4VhEA=="
+  "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-0.7.7.tgz"
+  "version" "0.7.7"
 
 "leaflet@^1.2.0", "leaflet@^1.8.0", "leaflet@>= 1.x":
   "integrity" "sha512-gwhMjFCQiYs3x/Sf+d49f10ERXaEFCPr+nVTryhAW8DWbMGqJqt9G4XuIaHmFW08zYvhgdzqXGr8AlW8v8dQkA=="
