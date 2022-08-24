@@ -1,4 +1,4 @@
-import { addLegend } from "./addLegend";
+// import { addLegend } from "./addLegend";
 import "./style.css";
 import { getPoliceStationWiseCrimes } from "./utils/coloredStations";
 import createMap from "./utils/leaflet";
@@ -59,7 +59,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
   markerData = await requestMarker.json();
   
   getPoliceStationWiseCrimes(markerData);
-  addLegend(map);
+  // addLegend(map);
 
   map.applyFilter(boundaryData, markerData, toggle);
 });
