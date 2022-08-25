@@ -61,7 +61,8 @@ const convertBase64 = (file) => {
   });
 };
 
-let media = "";
+let media =
+  "https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png";
 
 document.getElementById("report-form").addEventListener("submit", async (e) => {
   if (!allowGeo) {
@@ -73,11 +74,25 @@ document.getElementById("report-form").addEventListener("submit", async (e) => {
   const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
   const now = new Date();
-  formProps.date = now.getDate() + "" + now.getMonth() + "" + now.getFullYear();
+  formProps.date =
+    now.getDate() + "/" + now.getMonth() + "/" + now.getFullYear();
   formProps.time = now.getHours() + "" + now.getMinutes();
-  formProps.media = media;
+  formProps.image = media;
+  formProps.primary_type = "";
+  formProps.act_type = "";
+  formProps.verified = 0;
 
-  console.log(formProps);
+  const request = await fetch("http://127.0.0.1:8000/crowd_post", {
+    method: "POST",
+    body: JSON.stringify(formProps),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const response = await request.json();
+  console.log(response);
+  // clear form
+  document.getElementById("report-form").reset();
 });
 
 let camera_button = document.querySelector("#start-camera");
