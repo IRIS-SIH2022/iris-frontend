@@ -40,6 +40,7 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
     },
   });
   markerData = await requestMarker.json();
+  
   getPoliceStationWiseCrimes(markerData);
 
   map.applyFilter(boundaryData, markerData, toggle);

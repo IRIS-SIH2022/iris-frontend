@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link
+      rel="stylesheet"
+      type="text/css"
+      href="../style.css"
+    />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body style="background-color: black;">
+
+  <div id="colorsDiv"></div>
+</body>
+<script  >const markerColors = {
+  "DRUG SMUGGLING, POSSESION, SALE OR USE OF DRUGS": '#76448A',
+  "THE GAMBLING ACT": '#B2BABB',
+  "ROBBERY, THEFT, BURGLARY, DACOITY": '#D5F5E3',
+  "CULPABLE HOMICIDE AND GREVIOUS HURT": '#FADBD8',
+  "ROAD ACCIDENTS": '#82E0AA',
+  "ABDUCTION OR KIDNAPPING": '#FCF3CF',
+  "ARMS/EXPLOSIVE - RELATED ACTS": '#D98880',
+  "ASSAULT": '#F8C471',
+  "RAPE": '#A93226',
+  "THE MINES AND MINERALS (DEVELOPMENT AND REGULATION) ACT": '#85C1E9',
+  "FIRST DEGREE MURDER": '#F1C40F',
+  "ENVIRONMENT AND POLLUTION - RELATED ACTS": '#117A65',
+  "CHILD ABUSE": '#EDBB99',
+  "EXTORTION AND BLACKMAIL": '#FBFCFC',
+  "HUMAN TRAFFICKING": '#78281F',
+  "THE IMMORAL TRAFFIC (PREVENTION) ACT": '#5F6A6A'
+
+}
+
+function showTestColors() {
+  let element = document.getElementById('colorsDiv');
+
+  for (a in markerColors) {
+    // console.log()
+    let HTMLdata = `<div style='color:${markerColors[a]}'>${a}</div>`;
+    element.innerHTML += HTMLdata + '<br>'
+  }
+}
+
+showTestColors()
+</script>
+
+</html>
