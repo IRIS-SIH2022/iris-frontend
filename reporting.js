@@ -17,15 +17,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const addSingleMarker = (lat, lng) => {
   const marker = new L.Marker([lat, lng]);
   marker.addTo(map);
-  console.log(lat, lng);
   map.flyTo([lat, lng], 15);
-};
-
-const photoUpload = document.getElementById("photo-upload");
-
-const sendPic = () => {
-  const file = photoUpload.files[0];
-  console.log(file);
 };
 
 let allowGeo = false;
@@ -54,9 +46,24 @@ const onGeoError = (event) => {
 
 getLocationConstant();
 
-photoUpload.addEventListener("change", sendPic, false);
+const convertBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
 
-document.getElementById("report-form").addEventListener("submit", (e) => {
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+};
+
+let media = "";
+
+document.getElementById("report-form").addEventListener("submit", async (e) => {
   if (!allowGeo) {
     alert("Please enable location to submit form");
     return;
@@ -65,5 +72,31 @@ document.getElementById("report-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
+  const now = new Date();
+  formProps.date = now.getDate() + "" + now.getMonth() + "" + now.getFullYear();
+  formProps.time = now.getHours() + "" + now.getMinutes();
+  formProps.media = media;
+
   console.log(formProps);
+});
+
+let camera_button = document.querySelector("#start-camera");
+let video = document.querySelector("#video");
+let click_button = document.querySelector("#click-photo");
+let canvas = document.querySelector("#canvas");
+
+camera_button.addEventListener("click", async function () {
+  let stream = await navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: false,
+  });
+  video.srcObject = stream;
+});
+
+click_button.addEventListener("click", function () {
+  canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+  let image_data_url = canvas.toDataURL("image/jpeg");
+
+  // data url of the image
+  media = image_data_url;
 });

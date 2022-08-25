@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Iris - crime reporting</title>
+    <title>CBI</title>
   </head>
   <body>
     <div class="p-6">
-      <p class="text-3xl font-bold text-center">Crime Reporting Portal</p>
+      <p class="text-3xl font-bold text-center">Crowdsource by IRIS</p>
     </div>
     <div
       class="w-full md:w-full md:max-w-full mx-auto my-auto flex justify-center"
@@ -35,39 +35,53 @@
           </label>
           <hr class="p-2" />
 
-          <!-- <label class="block mb-6">
-            <span class="text-gray-700">Your name</span>
+          <label class="block mb-6">
+            <span class="text-gray-700">First name</span>
             <input
-              name="name"
+              name="first_name"
               type="text"
               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="Enter Your Name"
+              placeholder="Enter First Name"
             />
-          </label> -->
-          <!-- <label class="block mb-6">
-            <span class="text-gray-700">Email address</span>
-            <input
-              name="email"
-              type="email"
-              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              placeholder="joe.bloggs@example.com"
-            />
-          </label> -->
+          </label>
+
           <label class="block mb-6">
-            <span class="text-gray-700">Type of crime</span>
-            <select
-              name="experience"
+            <span class="text-gray-700">Last name</span>
+            <input
+              name="last_name"
+              type="text"
               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            >
-              <option>Less than a year</option>
-              <option>1 - 2 years</option>
-              <option>2 - 4 years</option>
-              <option>4 - 7 years</option>
-              <option>7 - 10 years</option>
-              <option>10+ years</option>
-            </select>
+              placeholder="Enter Last Name"
+            />
           </label>
           <label class="block mb-6">
+            <span class="text-gray-700">Address</span>
+            <input
+              name="address"
+              type="text"
+              placeholder="Enter Address"
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+          </label>
+          <label class="block mb-6">
+            <span class="text-gray-700">Phone No</span>
+            <input
+              name="phone"
+              type="text"
+              placeholder="Enter Phone No."
+              class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            />
+          </label>
+          <label for="stations" class="block">Select your Station</label>
+          <select
+            id="stations"
+            name="StationID"
+            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+            <option value="-1" selected>Choose Station</option>
+          </select>
+
+          <label class="block my-6">
             <span class="text-gray-700">Description of crime</span>
             <textarea
               name="message"
@@ -77,55 +91,45 @@
             ></textarea>
           </label>
           <label class="block mb-6">
-            <span class="text-gray-700">Upload Image</span>
-            <input
-              name="photo-upload"
-              id="photo-upload"
-              type="file"
-              accept="image/*"
-              capture="camera"
-              class="block w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            />
-          </label>
-          <!-- <div class="mb-6">
-            <div class="mt-2">
-              <div>
-                <label class="inline-flex items-center">
-                  <input
-                    name="remote"
-                    value="yes"
-                    type="radio"
-                    class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                    checked
-                  />
-                  <span class="ml-2">You'd like to work remotely</span>
-                </label>
-              </div>
-              <div>
-                <label class="inline-flex items-center">
-                  <input
-                    name="re"
-                    value="no"
-                    type="radio"
-                    class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  />
-                  <span class="ml-2">You'd prefer to work onsite</span>
-                </label>
-              </div>
+            <span class="text-gray-700 space-x-3">Upload Media</span>
+            <button
+              id="start-camera"
+              type="button"
+              class="h-10 px-5 border border-gray-300 rounded-lg transition-colors duration-150 focus:shadow-outline"
+            >
+              Start Camera
+            </button>
+            <div class="text-center my-2">
+              <video
+                id="video"
+                autoplay
+                class="border w-80 aspect-square rounded-lg my-1"
+              ></video>
+              <button
+                id="click-photo"
+                type="button"
+                class="my-1 h-10 px-5 border border-gray-300 rounded-lg transition-colors duration-150 focus:shadow-outline"
+              >
+                Click Photo
+              </button>
+              <canvas
+                id="canvas"
+                class="my-1 w-80 aspect-square border rounded-lg"
+              ></canvas>
             </div>
-          </div> -->
+          </label>
           <div class="mb-6">
             <button
               id="submit-report"
               type="submit"
               class="h-10 px-5 text-indigo-100 bg-indigo-700 rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-800"
             >
-              Apply
+              Submit
             </button>
           </div>
         </form>
       </div>
     </div>
-    <script type="module" src="/user.js"></script>
+    <script type="module" src="/reporting.js"></script>
   </body>
 </html>
