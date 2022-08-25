@@ -12,14 +12,13 @@ import { intensities, markerColors } from "./markerColoring";
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-const DEFAULT_LOCATION = [22.629799, 80.212343];
-const DEFAULT_ZOOM = 5;
-const BOUNDS = new L.latLngBounds(
-  // new L.latLng(23.63936, 68.14712),
-  // new L.latLng(28.20453, 97.34466)
-  new L.latLng(37.148033, 74.577971),
-  new L.latLng(8.086831, 77.513296)
-);
+const DEFAULT_LOCATION = [28.7, 77.1];
+const DEFAULT_ZOOM = 8;
+const BOUNDS = new L.latLngBounds();
+// new L.latLng(23.63936, 68.14712),
+// new L.latLng(28.20453, 97.34466)
+// new L.latLng(37.148033, 74.577971),
+// new L.latLng(8.086831, 77.513296)
 // dark map
 const CartoDB_DarkMatter = L.tileLayer(
   "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
@@ -70,10 +69,10 @@ const createCustomMarker = (
   hoursDifference,
   cctvId
 ) => {
-  const crimeColors = markerColors[markerData['primary_type']];
-  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors
-    };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors
-    };"></div>`;
+  const crimeColors = markerColors[markerData["primary_type"]];
+  let HTMLdata = `<div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors};box-shadow: 0px 0px ${
+    crimeAge + 1
+  }px ${crimeAge}px ${crimeColors};"></div>`;
 
   let icon = L.divIcon({
     className: "custom-div-icon",
@@ -82,13 +81,12 @@ const createCustomMarker = (
 
   //rings around latest crimes
   if (hoursDifference <= 44) {
-    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors
-      };">
+    HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors};">
       <div class='ring2' style="border: 1px solid ${crimeColors};">
         <div class='ring1' style="border: 1px solid ${crimeColors};">
-          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors
-      };box-shadow: 0px 0px ${crimeAge + 1}px ${crimeAge}px ${crimeColors
-      };  position: absolute;
+          <div  class='custom-pin'  style="height:${8}px; width:${8}px; background-color:${crimeColors};box-shadow: 0px 0px ${
+      crimeAge + 1
+    }px ${crimeAge}px ${crimeColors};  position: absolute;
             top: 50%;
             left: 50%;
             margin-right: -50%;
@@ -109,7 +107,7 @@ const createCustomMarker = (
     crime,
   })
     .bindPopup(
-      `<div><h3><strong>Case Number: </strong>${markerData["case_number"]}</h3><br><strong>Crime Type (Primary Type): </strong>${markerData["primary_type"]}<br><strong>Description: </strong>${markerData["description"]}<br><strong>Crime Date and Time: </strong>${markerData["date"]} and ${markerData['time']}</div>`
+      `<div><h3><strong>Case Number: </strong>${markerData["case_number"]}</h3><br><strong>Crime Type (Primary Type): </strong>${markerData["primary_type"]}<br><strong>Description: </strong>${markerData["description"]}<br><strong>Crime Date and Time: </strong>${markerData["date"]} and ${markerData["time"]}</div>`
     )
     .on("click", function () {
       activateCCTV(cctvId);
@@ -194,6 +192,10 @@ class createMap {
   }
 
   addMarkers() {
+    if (this.markers.length > 500) {
+      alert("Too many markers to display. Please use heatmap instead");
+      return;
+    }
     this.markers.map((marker) => {
       this.markerLayer.addLayer(marker);
     });
@@ -225,13 +227,13 @@ class createMap {
 
   applyFilter(boundary, markers, toggle) {
     this.clearMap();
-console.log(markers.length);
+    console.log(markers.length);
     if (boundary.length > 0) {
       if (toggle) {
         this.boundaries = L.geoJSON(null, {
           style: function (feature) {
             return {
-              color:assignColor(stationDetails[feature.StationID]) ,
+              color: assignColor(stationDetails[feature.StationID]),
               fill: true,
               opacity: 0.8,
             };
@@ -242,7 +244,7 @@ console.log(markers.length);
               this.setStyle({
                 fillColor: "grey",
                 fill: true,
-                opacity: 0.5
+                opacity: 0.5,
               });
               showPoliceStationData(feature);
             });
@@ -250,14 +252,11 @@ console.log(markers.length);
               this.setStyle({
                 fillColor: currentColor,
               });
-
             });
           },
         });
         this.boundaries.addData(boundary);
-           }
-      else {
-
+      } else {
         this.boundaries = L.geoJSON(null, {
           style: function (feature) {
             return {
@@ -271,7 +270,7 @@ console.log(markers.length);
               this.setStyle({
                 fillColor: "green",
                 fill: true,
-                opacity: 0.5
+                opacity: 0.5,
               });
               showPoliceStationData(feature);
             });
@@ -279,7 +278,6 @@ console.log(markers.length);
               this.setStyle({
                 fillColor: "blue",
               });
-
             });
           },
         });
@@ -288,6 +286,11 @@ console.log(markers.length);
     } else {
       // if boundary not present then set default bounds
       this.changeView(BOUNDS);
+      return;
+    }
+
+    if (markers.length === 0) {
+      alert("No data found");
       return;
     }
 
@@ -311,7 +314,7 @@ console.log(markers.length);
       let tmp = [];
       tmp.push(item["lat"]);
       tmp.push(item["lng"]);
-      tmp.push(intensities[item['primary_type']])
+      tmp.push(intensities[item["primary_type"]]);
       return tmp;
     });
 
@@ -321,6 +324,5 @@ console.log(markers.length);
     this.changeView(this.boundaries.getBounds());
   }
 }
-
 
 export default createMap;
