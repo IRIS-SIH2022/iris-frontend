@@ -104,13 +104,15 @@
                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
               >
                 <tr>
-                  <th scope="col" class="py-3 px-6">Product name</th>
-                  <th scope="col" class="py-3 px-6">Color</th>
-                  <th scope="col" class="py-3 px-6">Category</th>
-                  <th scope="col" class="py-3 px-6">Accesories</th>
-                  <th scope="col" class="py-3 px-6">Available</th>
-                  <th scope="col" class="py-3 px-6">Price</th>
-                  <th scope="col" class="py-3 px-6">Weight</th>
+                  <th scope="col" class="py-3 px-6">Primary Crime Type</th>
+                  <th scope="col" class="py-3 px-6">Crime Act Type</th>
+                  <th scope="col" class="py-3 px-6">Description</th>
+                  <th scope="col" class="py-3 px-6">Station Name</th>
+                  <th scope="col" class="py-3 px-6">Date</th>
+                  <th scope="col" class="py-3 px-6">Time</th>
+                  <th scope="col" class="py-3 px-6">Phone No.</th>
+                  <th scope="col" class="py-3 px-6">Address</th>
+                  <th scope="col" class="py-3 px-6">Media</th>
                   <th scope="col" class="py-3 px-6">Action</th>
                 </tr>
               </thead>
@@ -124,23 +126,54 @@
                   >
                     Apple MacBook Pro 17"
                   </th>
-                  <td class="py-4 px-6">Sliver</td>
+                  <td class="py-4 px-6">SliverSliverSliver</td>
+                  <td class="py-4 px-6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Nobis debitis odit quod maxime aspernatur, doloribus
+                    obcaecati facilis. Quis delectus porro rem quisquam
+                    provident ipsum fugit? Voluptas vel ex incidunt sint?
+                  </td>
                   <td class="py-4 px-6">Laptop</td>
                   <td class="py-4 px-6">Yes</td>
                   <td class="py-4 px-6">Yes</td>
+                  <td class="py-4 px-6">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Provident delectus libero ea, consequuntur incidunt fugit
+                    dicta ducimus enim, commodi ipsa earum eaque sunt, magni
+                    dolor facilis nemo esse pariatur iste.
+                  </td>
                   <td class="py-4 px-6">$2999</td>
                   <td class="py-4 px-6">3.0 lb.</td>
-                  <td class="flex items-center py-4 px-6 space-x-3">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >Edit</a
+                  <td class="flex flex-col items-center py-4 px-6 space-x-3">
+                    <div class="relative items-center z-0 mb-6 w-full group">
+                      <input
+                        type="text"
+                        name="case_number"
+                        id="cctns"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required=""
+                      />
+                      <label
+                        for="cctns"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                        >Enter CCTNS</label
+                      >
+                    </div>
+                    <div
+                      class="flex relative items-center z-0 mb-6 w-full group space-x-3"
                     >
-                    <a
-                      href="#"
-                      class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                      >Remove</a
-                    >
+                      <a
+                        href="#"
+                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        >Accept</a
+                      >
+                      <a
+                        href="#"
+                        class="font-medium text-red-600 dark:text-red-500 hover:underline"
+                        >Reject</a
+                      >
+                    </div>
                   </td>
                 </tr>
               </tbody>
