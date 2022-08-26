@@ -1,4 +1,37 @@
-let position = 0;
+import "../style.css";
+
+document.getElementById("filter-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const formProps = Object.fromEntries(formData);
+  const {
+    case_number,
+    StationID,
+    act_type,
+    primary_type,
+    daterange,
+    timerange,
+  } = formProps;
+  console.log(formProps);
+
+  const requestBound = await fetch(
+    `http://127.0.0.1:8000/station/${StationID}`
+  );
+
+  const boundaryData = await requestBound.json();
+
+  const requestMarker = await fetch("http://127.0.0.1:8000/marker/request", {
+    method: "POST",
+    body: JSON.stringify(formProps),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const markerData = await requestMarker.json();
+  console.log(markerData)
+  // map.applyFilter(boundaryData, markerData, toggle);
+});
+const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
 const jsonData = {
   'Murder': 10,
@@ -7,7 +40,7 @@ const jsonData = {
   'Kidnapping': 64
 }
 
-const numberOfGraphs = 3;
+// const numberOfGraphs = 3;
 
 // document.addEventListener("DOMContentLoaded", function (event) {
 //   document.getElementById('nextGraphButton').onclick = nextGraph;
@@ -16,9 +49,9 @@ const numberOfGraphs = 3;
 
 function makeDoughnutChart(jsonData) {
 
-  const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
-
-  const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
+  const categoryChartCTX = document.getElementById('doughnutChart');
+  if(!categoryChartCTX)return;
+  categoryChartCTX.getContext('2d');
 
   var xValues = Object.keys(jsonData);
   var yValues = Object.values(jsonData);
@@ -56,10 +89,11 @@ function makeDoughnutChart(jsonData) {
 
 function makePieChart(jsonData) {
 
-  const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
-
-  const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
-
+const categoryChartCTX = document.getElementById('pieChart');
+  if(!categoryChartCTX)return;
+  categoryChartCTX.getContext('2d');
+  
+  if(!categoryChartCTX)return;
   var xValues = Object.keys(jsonData);
   var yValues = Object.values(jsonData);
   var barColors = [];
@@ -96,9 +130,11 @@ function makePieChart(jsonData) {
 
 function makeLineChart(jsonData) {
 
-  const colorArray = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
-
-  const categoryChartCTX = document.getElementById('chartArea').getContext('2d');
+  const categoryChartCTX = document.getElementById('lineChart');
+  if(!categoryChartCTX)return;
+  categoryChartCTX.getContext('2d');
+  
+  if(!categoryChartCTX)return;
 
   var xValues = Object.keys(jsonData);
   var yValues = Object.values(jsonData);
@@ -133,52 +169,21 @@ function makeLineChart(jsonData) {
     }
   });
 }
-
-function nextGraph() {
-  position = (position + 1) % numberOfGraphs;
-  makeGraph();
-  shuffleChart();
-}
-function prevGraph() {
-  position = position - 1;
-  if (position == -1)
-    position = numberOfGraphs;
-  makeGraph();
-  shuffleChart();
-}
-
-let flag = 1;
-
-function shuffleChart() {
-  // hold the graph for 30 seconds before shuffling
-  flag == 0;
-  setTimeout(() => {
-    flag == 1;
-  }, 30000);
-}
 // switch the graphs if no particular graph is selected
 
-  // if (flag == 1) {
-  //   setTimeout(() => {
-  //     nextGraph();
-  //   }, 7000)
-  // }
+// if (flag == 1) {
+//   setTimeout(() => {
+//     nextGraph();
+//   }, 7000)
+// }
 
 function makeGraph() {
-  switch (position) {
-    case 0:
-      makeLineChart(jsonData);
-      break;
-    case 1:
-      makePieChart(jsonData);
-      break;
-    case 2:
-      makeDoughnutChart(jsonData)
-      break;
-    default:
-      break;
-  }
+  makeLineChart(jsonData);
+  makePieChart(jsonData);
+  makeDoughnutChart(jsonData)
 }
+
+makeGraph()
 
 
 // const testChartData = { 'January': 200, 'Februrary': 300, 'March': 260, 'April': 800 }

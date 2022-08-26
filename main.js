@@ -58,6 +58,7 @@ function switchColor() {
 
 function colorStation() {
   const element = document.getElementById("stationColorToggle");
+  if(!element) return;
   element.onclick = switchColor;
 }
 

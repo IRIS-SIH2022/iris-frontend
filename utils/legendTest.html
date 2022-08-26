@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 260px;
+  background-color: rgb(51, 50, 50);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <div class="popup" style='margin-top: 100px;' id = "legendPopup">Click me to toggle the popup!
+    <span class="popuptext" id="myPopup">
+  <!-- <div id="colorsDiv"></div> -->
+    </span>
+  </div>
+</body>
+<script>const markerColors = {
+    "DRUG SMUGGLING, POSSESION, SALE OR USE OF DRUGS": '#76448A',
+    "THE GAMBLING ACT": '#B2BABB',
+    "ROBBERY, THEFT, BURGLARY, DACOITY": '#D5F5E3',
+    "CULPABLE HOMICIDE AND GREVIOUS HURT": '#FADBD8',
+    "ROAD ACCIDENTS": '#82E0AA',
+    "ABDUCTION OR KIDNAPPING": '#FCF3CF',
+    "ARMS/EXPLOSIVE - RELATED ACTS": '#D98880',
+    "ASSAULT": '#F8C471',
+    "RAPE": '#A93226',
+    "THE MINES AND MINERALS (DEVELOPMENT AND REGULATION) ACT": '#85C1E9',
+    "FIRST DEGREE MURDER": '#F1C40F',
+    "ENVIRONMENT AND POLLUTION - RELATED ACTS": '#117A65',
+    "CHILD ABUSE": '#EDBB99',
+    "EXTORTION AND BLACKMAIL": '#FBFCFC',
+    "HUMAN TRAFFICKING": '#78281F',
+    "THE IMMORAL TRAFFIC (PREVENTION) ACT": '#5F6A6A'
+  }
+
+
+  function showTestColors() {
+    let element = document.getElementById('myPopup');
+
+    for (a in markerColors) {
+      // console.log('asdsa')
+      let HTMLdata = `<div style='color:${markerColors[a]}'>${a}</div>`
+      element.innerHTML += HTMLdata
+    }
+  }
+  function showPopup() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+  }
+
+  showTestColors()
+</script>
+
+</html>

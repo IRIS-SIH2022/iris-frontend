@@ -92,6 +92,7 @@ export const stations = [
 
 function addDropDown(selectorID, dataSet) {
   let element = document.getElementById(selectorID);
+  if(!element) return;
 
   for (let i = 0; i < dataSet.length; i++) {
     let option = document.createElement("option");
@@ -103,8 +104,9 @@ function addDropDown(selectorID, dataSet) {
 }
 
 function addStationsDropdown(stations) {
+  
   let element = document.getElementById('stations');
-
+  if(!element) return;
   for (let i=0;i< stations.length;i++) {
     let option = document.createElement("option");
     option.value = Object.values(stations[i])[0];
