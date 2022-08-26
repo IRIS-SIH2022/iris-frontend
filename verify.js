@@ -33,7 +33,7 @@ const getRow = (index, data) =>
           id="acts"
           data-id="act-${data._id}"
           name="act_type"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="actsDropDown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="" selected>Choose Act</option>
         </select>
@@ -50,7 +50,7 @@ const getRow = (index, data) =>
           id="primaryTypes"
           data-id="crime-${data._id}"
           name="primary_type"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="primaryTypesDropDown bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="" selected>Choose Crime</option>
         </select>
@@ -143,6 +143,22 @@ document.addEventListener("click", async (e) => {
       primary_type,
       act_type,
     };
-    console.log(data);
+    const request = await fetch(`http://127.0.0.1:8000/verify/accept`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const response = await request.json();
+    console.log(response);
+    // remove row from table
+    const row = document.getElementById(id);
+    row.remove();
+    // update serial number
+    const rows = document.querySelectorAll("tr");
+    rows.forEach((row, index) => {
+      row.children[0].innerText = index;
+    });
   }
 });

@@ -70,7 +70,7 @@ document.getElementById("report-form").addEventListener("submit", async (e) => {
     return;
   }
 
-  e.preventDefault();
+  // e.preventDefault();
   const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
   const now = new Date();
@@ -82,7 +82,7 @@ document.getElementById("report-form").addEventListener("submit", async (e) => {
   formProps.act_type = "";
   formProps.verified = 0;
 
-  const request = await fetch("http://127.0.0.1:8000/crowd_post", {
+  const request = await fetch("http://15.206.153.179:8000/crowd_post", {
     method: "POST",
     body: JSON.stringify(formProps),
     headers: {

@@ -63,6 +63,26 @@ const baseMaps = {
   "Detailed Map": CartoDB_Voyager,
 };
 
+const getDateFromStamp = function (timestamp) {
+  // console.log(timestamp.length);
+  let d = new Date(timestamp * 1000);
+  let timeStampCon = d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear();
+  return timeStampCon;
+};
+
+const getTime = (time) => {
+  // convert int to string
+  let timeString = time.toString();
+  // make timeString of length 4
+  while (timeString.length < 4) {
+    timeString = "0" + timeString;
+  }
+  // get time from timeString
+  let hour = timeString.substring(0, 2);
+  let minute = timeString.substring(2, 4);
+  return hour + ":" + minute;
+};
+
 const createCustomMarker = (
   markerData,
   crimeAge = 2,
@@ -79,7 +99,7 @@ const createCustomMarker = (
     html: HTMLdata,
   });
 
-  console.log('--')
+  console.log("--");
   //rings around latest crimes
   if (hoursDifference <= 44) {
     HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors};">
@@ -108,7 +128,20 @@ const createCustomMarker = (
     crime,
   })
     .bindPopup(
-      `<div><h3><strong>Case Number: </strong>${markerData["case_number"]}</h3><br><strong>Crime Type (Primary Type): </strong>${markerData["primary_type"]}<br><strong>Description: </strong>${markerData["description"]}<br><strong>Crime Date and Time: </strong>${markerData["date"]} and ${markerData["time"]}</div>`
+      `<div>
+        <h3>
+          <strong>Case Number: </strong>${markerData["case_number"]}
+        </h3>
+        <br>
+        <strong>Crime Type (Primary Type): </strong>${
+          markerData["primary_type"]
+        }
+        <br>
+        <strong>Description: </strong>${markerData["description"]}
+        <br>
+        <strong>Crime Date and Time: </strong>${getDateFromStamp(
+          markerData["date"]
+        )} and ${getTime(markerData["time"])}</div>`
     )
     .on("click", function () {
       activateCCTV(cctvId);
@@ -297,9 +330,9 @@ class createMap {
 
     if (markers.length > 0)
       this.markers = markers.map((marker) => {
-        const crimeTime = marker.date + marker.time/100*60*60
+        const crimeTime = marker.date + (marker.time / 100) * 60 * 60;
         // console.log(crimeTime*1000, Date.now());
-        let difference = Date.now() - crimeTime*1000 ;
+        let difference = Date.now() - crimeTime * 1000;
         let hoursDifference = Math.floor(difference / 1000 / 60 / 60);
         let crimeAge;
         if (hoursDifference <= 1) crimeAge = 3;
