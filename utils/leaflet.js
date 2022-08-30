@@ -101,7 +101,7 @@ const createCustomMarker = (
 
   console.log("--");
   //rings around latest crimes
-  if (hoursDifference <= 44) {
+  if (hoursDifference <= 144) {
     HTMLdata = `<div class='ring3' style="border: 1px solid ${crimeColors};">
       <div class='ring2' style="border: 1px solid ${crimeColors};">
         <div class='ring1' style="border: 1px solid ${crimeColors};">

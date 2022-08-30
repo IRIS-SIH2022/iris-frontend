@@ -92,6 +92,7 @@ document.getElementById("report-form").addEventListener("submit", async (e) => {
   const response = await request.json();
   console.log(response);
   // clear form
+  // alert("Sent successfully")
   document.getElementById("report-form").reset();
 });
 
