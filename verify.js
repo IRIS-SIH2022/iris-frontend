@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const response = await request.json();
   const tableBody = document.querySelector("#table-body");
   console.log(response);
-  console.log("data taken")
   renderTable(response, tableBody);
 });
 
