@@ -1,4 +1,5 @@
 import "../style.css";
+const backendEndpoint = "https://fml228.deta.dev"
 
 document.getElementById("filter-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -15,12 +16,12 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
   console.log(formProps);
 
   const requestBound = await fetch(
-    `http://127.0.0.1:8000/station/${StationID}`
+    `${backendEndpoint}/station/${StationID}`
   );
 
   const boundaryData = await requestBound.json();
 
-  const requestMarker = await fetch("http://127.0.0.1:8000/marker/request", {
+  const requestMarker = await fetch(`${backendEndpoint}/marker/request`, {
     method: "POST",
     body: JSON.stringify(formProps),
     headers: {

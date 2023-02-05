@@ -1,8 +1,9 @@
 import "./style.css";
+const backendEndpoint = "https://fml228.deta.dev"
 
 // fetch api on document load
 document.addEventListener("DOMContentLoaded", async () => {
-  const request = await fetch("http://127.0.0.1:8000/list_crowd");
+  const request = await fetch(`${backendEndpoint}/list_crowd`);
   const response = await request.json();
   const tableBody = document.querySelector("#table-body");
   console.log(response);
@@ -117,7 +118,7 @@ const renderTable = (data, tableBody) => {
 document.addEventListener("click", async (e) => {
   if (e.target.id === "reject") {
     const id = e.target.parentElement.dataset.id;
-    const request = await fetch(`http://127.0.0.1:8000/verify/remove/${id}`);
+    const request = await fetch(`${backendEndpoint}/verify/remove/${id}`);
     const response = await request.json();
     console.log(response);
     // remove row from table
@@ -143,7 +144,7 @@ document.addEventListener("click", async (e) => {
       primary_type,
       act_type,
     };
-    const request = await fetch(`http://127.0.0.1:8000/verify/accept`, {
+    const request = await fetch(`${backendEndpoint}/verify/accept`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

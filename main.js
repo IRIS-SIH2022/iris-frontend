@@ -1,6 +1,7 @@
 import "./style.css";
 import { getPoliceStationWiseCrimes } from "./utils/coloredStations";
 import createMap from "./utils/leaflet";
+const backendEndpoint = "https://fml228.deta.dev"
 
 let toggle = 0;
 let boundaryData;
@@ -27,12 +28,12 @@ document.getElementById("filter-form").addEventListener("submit", async (e) => {
   // apply filter to map
 
   const requestBound = await fetch(
-    `http://127.0.0.1:8000/station/${StationID}`
+    `${backendEndpoint}/station/${StationID}`
   );
 
   boundaryData = await requestBound.json();
 
-  const requestMarker = await fetch("http://127.0.0.1:8000/marker/request", {
+  const requestMarker = await fetch(`${backendEndpoint}/marker/request`, {
     method: "POST",
     body: JSON.stringify(formProps),
     headers: {

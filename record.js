@@ -1,4 +1,5 @@
 import "./style.css";
+const backendEndpoint = "https://fml228.deta.dev"
 
 document.getElementById("record-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -6,7 +7,7 @@ document.getElementById("record-form").addEventListener("submit", async (e) => {
   const formProps = Object.fromEntries(formData);
   console.log(formProps);
   // post request to api
-  const request = await fetch("http://127.0.0.1:8000/marker/add", {
+  const request = await fetch(`${backendEndpoint}/marker/add`, {
     method: "POST",
     body: JSON.stringify(formProps),
     headers: {
