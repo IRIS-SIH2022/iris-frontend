@@ -66,8 +66,9 @@ function colorStation() {
 colorStation();
 
 // code for default crimes on loading screen
-
-const defaultBoundaries = [
+setTimeout(() => {
+  
+boundaryData = [
   {
       "gid": null,
       "type": "Feature",
@@ -2252,7 +2253,7 @@ const defaultBoundaries = [
   }
 ]
 
-const defaultMarkers = [
+markerData = [
   {
       "_id": "6302449ec22d1157b45dd3eb",
       "case_number": "HV314684",
@@ -4366,9 +4367,11 @@ const defaultMarkers = [
       "StationID": 12
   }
 ]
+}, 200);
+
 
 setTimeout(() => {
-  getPoliceStationWiseCrimes(defaultMarkers);
+  getPoliceStationWiseCrimes(markerData);
 
-  map.applyFilter(defaultBoundaries, defaultMarkers, toggle);  
+  map.applyFilter(boundaryData, markerData, toggle);  
 }, 500);
