@@ -4,6 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Iris Dashboard</title>
+    <style>
+      .tooltip:hover:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    padding: 5px 10px;
+    margin: 25px 0 0 10px;
+    font-size: 12px;
+    background: rgb(75, 73, 73);
+    color: white;
+    border-radius: 5px;
+}
+
+.tooltip:hover:after {
+    content: '';  
+    position: absolute;
+    margin: 6px 0 0 3px;
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-right: 10px solid rgb(61, 60, 58);
+	border-bottom: 5px solid transparent;
+}
+
+    </style>
   </head>
 
   <body class="bg-gray-900">
@@ -131,8 +155,8 @@
                     class="flex flex-row justify-center capitalize"
                     id="filter-form"
                   >
-                    <div
-                      class="relative flex items-center w-full lg:w-72 h-full group"
+                    <div data-tooltip="PLease enter the CCTNS id to search for a specific query"
+                      class="tooltip relative flex items-center w-full lg:w-72 h-full group"
                     >
                       <div
                         class="absolute z-50 flex items-center justify-center block w-auto h-10 p-3 pr-2 text-sm text-gray-500 uppercase cursor-pointer sm:hidden"
@@ -185,13 +209,13 @@
                       </div> -->
                     </div>
                     <div class="mx-2">
-                      <div class="col-span-6 w-full lg:w-64 sm:col-span-3">
+                      <div class="col-span-6 w-full lg:w-64 sm:col-span-3 tooltip" data-tooltip="Please select a station of your choice.">
                         <!-- <label
                         for="country"
                         class="block text-sm font-medium text-white"
                         >Country</label
                       > -->
-                        <select
+                        <select 
                           id="stations"
                           name="StationID"
                           class="capitalize block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -201,7 +225,7 @@
                       </div>
                     </div>
                     <div class="mx-2">
-                      <div class="col-span-6 w-full lg:w-72 sm:col-span-3">
+                      <div class="col-span-6 w-full lg:w-72 sm:col-span-3 tooltip" data-tooltip="Please select any act of your choice.">
                         <select
                           id="acts"
                           name="act_type"
@@ -212,7 +236,7 @@
                       </div>
                     </div>
                     <div class="mx-2">
-                      <div class="col-span-6 sm:col-span-3">
+                      <div class="tooltip col-span-6 sm:col-span-3" data-tooltip="PLease select the primary type of the crime.">
                         <select
                           id="primaryTypes"
                           name="primary_type"
@@ -239,7 +263,7 @@
                     </div>
                   </div> -->
                     <div class="mx-2">
-                      <div class="col-span-6 sm:col-span-3">
+                      <div class="col-span-6 sm:col-span-3 tooltip" data-tooltip="Please select some time range. Ensure that the range is of 1 or 2 days only so that you can enable the markers as well from the map options below.">
                         <input
                           id="daterange"
                           name="daterange"
@@ -252,7 +276,7 @@
                       </div>
                     </div>
                     <div class="mx-2">
-                      <div class="col-span-6 sm:col-span-3">
+                      <div class="col-span-6 sm:col-span-3 tooltip" data-tooltip="Please select some time range if you want to see crimes happening at certain periods of the day.">
                         <input
                           id="timerange"
                           name="timerange"
@@ -265,11 +289,11 @@
                       </div>
                     </div>
                     <div class="mx-2">
-                      <input
+                      <input  data-tooltip="Please click here to run the search query."
                         id="filter-submit-btn"
                         type="submit"
                         value="Apply"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        class="tooltip bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                       />
                       <!-- Apply Filter -->
                       <!-- </> -->
@@ -361,8 +385,8 @@
                                 class="block text-sm font-medium text-white"
                                 >Enable Station Colors</label
                               >
-                              <label class="switch" style="margin-left: 30px">
-                                <input
+                              <label class="switch" style="margin-left: 30px" >
+                                <input  
                                   id="stationColorToggle"
                                   type="checkbox"
                                 />
