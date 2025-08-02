@@ -167,13 +167,13 @@ class createMap {
     this.layerControl = L.control.layers(baseMaps).addTo(this.map);
 
     // add marker layer
-    this.markerLayer = L.featureGroup();
+    this.markerLayer = L.featureGroup().addTo(this.map);
     this.layerControl.addOverlay(this.markerLayer, "Markers");
     // add boundaries layer
     this.boundariesLayer = L.featureGroup().addTo(this.map);
     this.layerControl.addOverlay(this.boundariesLayer, "Boundaries");
     // add heatmap layer
-    this.heatMapLayer = L.heatLayer(this.heatmapData, { radius: 20 });
+    this.heatMapLayer = L.heatLayer(this.heatmapData, { radius: 20 }).addTo(this.map);
     this.layerControl.addOverlay(this.heatMapLayer, "Heatmap");
 
     // get geoJSON of geoman
